@@ -1,0 +1,143 @@
+{
+  "settings": {
+    "defaultLanguage": "en",
+    "supportedLanguages": ["en", "de"],
+    "base_url": "/"
+  },
+  "site": {
+    "navigation_home": "▣",
+    "navigation_next": "▷",
+    "navigation_separator": "|",
+    "navigation_previous": "◁",
+    "name": "Wilcuma - My Portfolio",
+    "nuance_color": "blue",
+    "footer1": "© 2025/2026",
+    "logo_url": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764520461/imprintic-emblem_olmzlh.png",
+    "footer2": "All rights reserved."
+  },
+  "en": {
+    "index": {
+      "title": "Creative Work & Projects",
+      "intro": "A showcase of my latest work, utilizing responsive design and Cloudinary media assets.",
+      "page_url": "index.html",
+      "tiles": [
+        {
+          "id": "portfolio1",
+          "color": "red",
+          "image": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693659/00_index_blfowe.png",
+          "use_soft_bg": true,
+          "symbol": "code-square",
+          "title": "A Warm Welcome",
+          "description": "Read about our initial concept and goals."
+        },
+        {
+          "id": "portfolio2",
+          "color": "blue",
+          "image": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693658/02_portfolio2_iiqtcw.jpg",
+          "use_soft_bg": false,
+          "symbol": "monitor",
+          "title": "Data & Impact",
+          "description": "View the supporting metrics and evidence."
+        },
+        {
+          "id": "portfolio3",
+          "color": "blue",
+          "image": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693658/02_portfolio2_iiqtcw.jpg",
+          "use_soft_bg": false,
+          "symbol": "flame",
+          "title": "Future Outlook",
+          "description": "Exploring what lies ahead for the project."
+        }
+      ]
+    },
+    "portfolio1": {
+      "title": "The Initial Spark",
+      "intro": "Welcome to the first chapter. We are using Flexbox to ensure the media and text flow seamlessly. <br><strong>This is bold HTML text.</strong>",
+      "page_url": "portfolio1.html",
+      "prev_story_link": "index.html",
+      "next_story_link": "portfolio2.html",
+      "media": {
+        "url": "https://res.cloudinary.com/dqwm4pdbz/video/upload/v1764693664/01_portfolo1_ryc5ke.mp4",
+        "type": "video",
+        "size_percentage": 100,
+        "caption": "The first visual illustrating the core concept.",
+        "use_soft_bg": false,
+        "animated_webp_url": "https://res.cloudinary.com/dqwm4pdbz/video/upload/v1764693659/01_portfolio1_o1xmxb.webm"
+      },
+      "content": [
+        {
+          "type": "headline",
+          "text": "Beautiful Minds"
+        },
+        {
+          "type": "text",
+          "text": "Your kind support is a keystone for Maya's way to blossom. <br><br>We are fully transparent and will provide you with every detail."
+        },
+        {
+          "type": "paypal_button",
+          "hosted_id": "4TNEHSHJYT8YG",
+          "text": "Support a Way Forward"
+        }
+      ]
+    },
+    "portfolio2": {
+      "title": "Supporting Metrics",
+      "intro": "The responsiveness is key. When the screen is wide, the image and text sit side-by-side.",
+      "page_url": "portfolio2.html",
+      "prev_story_link": "portfolio1.html",
+      "next_story_link": "portfolio3.html",
+      "media": {
+        "url": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693658/02_portfolio2_iiqtcw.jpg",
+        "type": "image",
+        "size_percentage": 60,
+        "caption": "Statistics showing our primary results.",
+        "use_soft_bg": false
+      },
+      "content": [
+        {
+          "type": "headline",
+          "text": "Deep Dive Data"
+        },
+        {
+          "type": "text",
+          "text": "Detailed analysis of the metrics provided in the chart above."
+        },
+        {
+          "type": "link",
+          "text": "Download Full Report (PDF)",
+          "url": "#",
+          "action": "download"
+        }
+      ]
+    },
+    "portfolio3": {
+      "title": "Future Outlook",
+      "intro": "Looking ahead at the roadmap.",
+      "page_url": "portfolio3.html",
+      "prev_story_link": "portfolio2.html",
+      "next_story_link": "",
+      "media": {
+        "url": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693658/02_portfolio2_iiqtcw.jpg",
+        "type": "image",
+        "size_percentage": 50,
+        "caption": "Roadmap Visualization",
+        "use_soft_bg": true
+      },
+      "content": [
+        {
+          "type": "headline",
+          "text": "Next Steps"
+        },
+        {
+          "type": "text",
+          "text": "We are planning to expand the scope by Q4."
+        }
+      ]
+    }
+  },
+  "de": {
+    "index": {
+      "title": "Meine Projekte"
+    }
+  }
+}

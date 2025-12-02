@@ -3,71 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Dark Mode Nuance</title>
+    <title>Wilcuma - My Portfolio</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     
     <script>
         tailwind.config = {
-            darkMode: 'class', // vital for the dark mode toggle
+            darkMode: 'media', // Respect system preference
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                 }
             }
         }
     </script>
 
     <style>
-        /* --- CUSTOM CSS FROM CONSOLIDATION GUIDE --- */
-        
-        /* Font Import */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         
-        body {
-            font-family: 'Inter', sans-serif;
-            transition: background-color 0.3s, color 0.3s;
-        }
+        body { font-family: 'Inter', sans-serif; transition: background-color 0.3s, color 0.3s; }
+        .tile-card { transition: all 0.3s ease-in-out; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .tile-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
 
-        /* General card transitions */
-        .tile-card {
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Light Mode Background FIX: Uses near-white and !important to prevent browser dark mode from inverting the color */
-        .tile-red-nuance, .tile-blue-nuance {
-            background-color: hsl(0, 0%, 98%) !important; 
-            border-color: #e5e7eb; /* Tailwind gray-200 */
-        }
-
-        /* RED NUANCE in Dark Mode */
-        .dark .tile-red-nuance {
-            background-color: #3b0718; 
-            border-color: #7f1d1d; 
-        }
-        .dark .tile-red-nuance:hover {
-            border-color: #dc2626; 
-        }
-
-        /* BLUE NUANCE in Dark Mode */
-        .dark .tile-blue-nuance {
-            background-color: #0c1a3b; 
-            border-color: #1e3a8a; 
-        }
-        .dark .tile-blue-nuance:hover {
-            border-color: #2563eb; 
-        }
-
-        /* Hover effect */
-        .tile-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-        }
+        /* NUANCE COLORS */
+        /* Red */
+        .tile-red-nuance { background-color: hsl(0, 0%, 98%) !important; border-color: #e5e7eb; }
+        .dark .tile-red-nuance { background-color: #3b0718 !important; border-color: #7f1d1d; }
+        .dark .tile-red-nuance:hover { border-color: #dc2626; }
+        /* Blue */
+        .tile-blue-nuance { background-color: hsl(0, 0%, 98%) !important; border-color: #e5e7eb; }
+        .dark .tile-blue-nuance { background-color: #0c1a3b !important; border-color: #1e3a8a; }
+        .dark .tile-blue-nuance:hover { border-color: #2563eb; }
+        /* Soft Background for Transparent PNGs */
+        .soft-bg { background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(200,200,200,0.2) 100%); }
+        .dark .soft-bg { background: radial-gradient(circle, rgba(50,50,50,0.5) 0%, rgba(0,0,0,0.2) 100%); }
     </style>
 </head>
 
@@ -75,106 +45,87 @@
 
     <header class="w-full p-6 flex justify-between items-center max-w-6xl mx-auto">
         <div class="flex items-center gap-3">
-            <h1 class="text-2xl font-bold tracking-tight">My Portfolio</h1>
+            <img id="site-logo" src="" alt="Logo" class="h-8 w-8 object-contain">
+            <h1 id="site-name" class="text-2xl font-bold tracking-tight"></h1>
         </div>
-        
-        <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
-            <i data-lucide="sun" class="hidden dark:block text-yellow-400"></i>
-            <i data-lucide="moon" class="block dark:hidden text-slate-600"></i>
-        </button>
+        <div class="text-sm font-medium text-gray-500">EN | DE</div>
     </header>
 
     <main class="flex-grow px-6 py-10">
         <div class="max-w-6xl mx-auto">
             
             <section class="mb-12 text-center md:text-left">
-                <h2 class="text-4xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-red-600 dark:from-blue-400 dark:to-red-400">
-                    Creative Work & Projects
-                </h2>
-                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl">
-                    A showcase of my latest work, utilizing responsive design and Cloudinary media assets.
-                </p>
+                <h2 id="page-title" class="text-4xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-red-600 dark:from-blue-400 dark:to-red-400"></h2>
+                <p id="page-intro" class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl"></p>
             </section>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                <div class="tile-card tile-red-nuance p-6 rounded-xl hover:border-red-500 dark:hover:border-red-400 border-2 flex flex-col h-full">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="text-red-600 dark:text-red-400" data-lucide="code-square"></div>
-                        <span class="text-xs font-medium text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/30 px-3 py-1 rounded-full">Dev</span>
-                    </div>
-                    
-                    <div class="mb-4 overflow-hidden rounded-lg h-40 bg-gray-200 dark:bg-gray-800 relative">
-                        <div class="flex items-center justify-center h-full text-gray-400 text-sm">Cloudinary Image Area</div>
-                    </div>
-
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Red Nuance Project</h3>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm flex-grow">
-                        This card demonstrates the "Red Nuance" logic. In light mode, it is near-white. In dark mode, it is deep burgundy.
-                    </p>
+            <div id="tiles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 </div>
-
-                <div class="tile-card tile-blue-nuance p-6 rounded-xl hover:border-blue-500 dark:hover:border-blue-400 border-2 flex flex-col h-full">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="text-blue-600 dark:text-blue-400" data-lucide="monitor"></div>
-                        <span class="text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 px-3 py-1 rounded-full">UI/UX</span>
-                    </div>
-
-                     <div class="mb-4 overflow-hidden rounded-lg h-40 bg-gray-200 dark:bg-gray-800 relative">
-                        <div class="flex items-center justify-center h-full text-gray-400 text-sm">Cloudinary Video Area</div>
-                    </div>
-
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Blue Nuance Project</h3>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm flex-grow">
-                        This card uses the "Blue Nuance". It shifts to a deep navy blue in dark mode while retaining a crisp border.
-                    </p>
-                </div>
-
-                 <div class="tile-card tile-red-nuance p-6 rounded-xl hover:border-red-500 dark:hover:border-red-400 border-2 flex flex-col h-full">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="text-red-600 dark:text-red-400" data-lucide="flame"></div>
-                        <span class="text-xs font-medium text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/30 px-3 py-1 rounded-full">Backend</span>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">API Integration</h3>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm flex-grow">
-                        Another example of the Red styling. The hover effects include a slight lift (translateY) and increased shadow.
-                    </p>
-                </div>
-
-            </div>
         </div>
     </main>
 
     <footer class="w-full py-6 text-center text-gray-500 text-sm border-t border-gray-200 dark:border-gray-800">
-        &copy; 2025 Portfolio. Powered by Tailwind & Cloudinary.
+        <span id="footer-text"></span>
     </footer>
 
     <script>
-        // 1. Initialize Icons
-        lucide.createIcons();
+        // FETCH AND RENDER CONTENT
+        async function loadContent() {
+            // In a real scenario, use: const response = await fetch('content.json');
+            // For this demo, assuming the JSON object is variable 'data' (paste JSON here or load it)
+            // To make this file work immediately, I will simulate the fetch.
+            
+            const response = await fetch('content.json'); 
+            const data = await response.json();
 
-        // 2. Theme Toggle Logic (Simplified for immediate use)
-        // Note: To implement the Firebase logic mentioned in your guide, 
-        // you would replace the localStorage calls below with Firestore `onSnapshot` and `setDoc` calls.
+            // Set Global Site Data
+            document.getElementById('site-name').innerText = data.site.name;
+            document.getElementById('site-logo').src = data.site.logo_url;
+            document.getElementById('footer-text').innerText = `${data.site.footer1} ${data.site.footer2}`;
 
-        const htmlEl = document.documentElement;
+            // Set Page Specific Data (EN Index)
+            const pageData = data.en.index;
+            document.getElementById('page-title').innerText = pageData.title;
+            document.getElementById('page-intro').innerText = pageData.intro;
 
-        // Check Local Storage or System Preference on load
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            htmlEl.classList.add('dark');
-        } else {
-            htmlEl.classList.remove('dark');
+            // Render Tiles
+            const grid = document.getElementById('tiles-grid');
+            
+            pageData.tiles.forEach(tile => {
+                // Determine Nuance Class
+                const nuanceClass = tile.color === 'red' ? 'tile-red-nuance' : 'tile-blue-nuance';
+                const textClass = tile.color === 'red' ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400';
+                const bgClass = tile.color === 'red' ? 'bg-red-100 dark:bg-red-900/30' : 'bg-blue-100 dark:bg-blue-900/30';
+                const borderHover = tile.color === 'red' ? 'hover:border-red-500 dark:hover:border-red-400' : 'hover:border-blue-500 dark:hover:border-blue-400';
+
+                // Soft BG Logic
+                const softBgClass = tile.use_soft_bg ? 'soft-bg' : '';
+
+                // Construct Card HTML
+                const cardHTML = `
+                <a href="${tile.id}.html" class="tile-card ${nuanceClass} p-6 rounded-xl ${borderHover} border-2 flex flex-col h-full cursor-pointer text-left block">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="${textClass}" data-lucide="${tile.symbol}"></div>
+                        <span class="text-xs font-medium ${textClass} ${bgClass} px-3 py-1 rounded-full">View</span>
+                    </div>
+                    
+                    <div class="mb-4 overflow-hidden rounded-lg h-40 bg-gray-200 dark:bg-gray-800 relative flex items-center justify-center ${softBgClass}">
+                        <img src="${tile.image}" alt="${tile.title}" class="max-h-full max-w-full object-contain p-2">
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">${tile.title}</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm flex-grow">
+                        ${tile.description}
+                    </p>
+                </a>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+
+            lucide.createIcons();
         }
 
-        function toggleTheme() {
-            if (htmlEl.classList.contains('dark')) {
-                htmlEl.classList.remove('dark');
-                localStorage.theme = 'light';
-            } else {
-                htmlEl.classList.add('dark');
-                localStorage.theme = 'dark';
-            }
-        }
+        loadContent();
     </script>
 </body>
 </html>

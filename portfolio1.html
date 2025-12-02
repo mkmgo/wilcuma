@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Story</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'media',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* PayPal Button Styling */
+        .paypal-btn {
+            background-color: #FFC439;
+            color: #000;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: filter 0.2s;
+        }
+        .paypal-btn:hover { filter: brightness(0.95); }
+
+        /* Media Handling */
+        .soft-bg { background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(200,200,200,0.2) 100%); }
+        .dark .soft-bg { background: radial-gradient(circle, rgba(50,50,50,0.5) 0%, rgba(0,0,0,0.2) 100%); }
+        
+        .formatted-text strong { font-weight: 700; color: inherit; }
+        .formatted-text p { margin-bottom: 1rem; }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 flex flex-col">
+
+    <header class="w-full p-4 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2 text-xl font-bold hover:text-blue-600 dark:hover:text-blue-400 transition">
+                <span id="nav-home-icon"></span> 
+                <span id="site-name-nav" class="hidden sm:inline"></span>
+            </a>
+            
+            <div class="flex items-center gap-4 text-lg">
+                <a id="nav-prev" href="#" class="hover:text-blue-600 dark:hover:text-blue-400 opacity-50 pointer-events-none transition"></a>
+                <span id="nav-sep" class="text-gray-400"></span>
+                <a id="nav-next" href="#" class="hover:text-blue-600 dark:hover:text-blue-400 opacity-50 pointer-events-none transition"></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow px-6 py-10">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10">
+            
+            <div class="md:col-span-5 flex flex-col gap-6 md:sticky md:top-24 h-fit">
+                
+                <div id="media-container" class="rounded-2xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
+                    </div>
+
+                <h1 id="content-title" class="text-3xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-red-600 dark:from-blue-400 dark:to-red-400"></h1>
+
+                <div id="content-intro" class="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed formatted-text"></div>
+
+            </div>
+
+            <div class="md:col-span-7 flex flex-col gap-8 md:pt-4">
+                <div id="dynamic-content" class="flex flex-col gap-6">
+                    </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="w-full py-6 text-center text-gray-500 text-sm border-t border-gray-200 dark:border-gray-800 mt-12">
+        <span id="footer-text"></span>
+    </footer>
+
+    <script>
+        async function loadPortfolio() {
+            const response = await fetch('content.json');
+            const data = await response.json();
+
+            // 1. Identify current page ID from filename (e.g. "portfolio1.html" -> "portfolio1")
+            const path = window.location.pathname;
+            const pageId = path.substring(path.lastIndexOf('/') + 1).replace('.html', '') || 'portfolio1'; // default for testing
+
+            const site = data.site;
+            const content = data.en[pageId];
+
+            if(!content) {
+                document.body.innerHTML = "<div class='p-10 text-center'><h1>Page Content Not Found in JSON</h1></div>";
+                return;
+            }
+
+            // --- NAVIGATION SETUP ---
+            document.getElementById('site-name-nav').innerText = site.name;
+            document.getElementById('nav-home-icon').innerText = site.navigation_home;
+            document.getElementById('nav-sep').innerText = site.navigation_separator;
+
+            const prevLink = document.getElementById('nav-prev');
+            prevLink.innerText = site.navigation_previous;
+            if(content.prev_story_link) {
+                prevLink.href = content.prev_story_link;
+                prevLink.classList.remove('opacity-50', 'pointer-events-none');
+            }
+
+            const nextLink = document.getElementById('nav-next');
+            nextLink.innerText = site.navigation_next;
+            if(content.next_story_link) {
+                nextLink.href = content.next_story_link;
+                nextLink.classList.remove('opacity-50', 'pointer-events-none');
+            }
+            document.getElementById('footer-text').innerText = `${site.footer1} ${site.footer2}`;
+
+
+            // --- LEFT COLUMN RENDER ---
+            
+            // Media
+            const mediaBox = document.getElementById('media-container');
+            if (content.media.use_soft_bg) mediaBox.classList.add('soft-bg');
+            
+            let mediaHTML = '';
+            const sizeStyle = `style="width: ${content.media.size_percentage}%; margin: 0 auto; display: block;"`;
+
+            if (content.media.type === 'video') {
+                // Check if mobile for animated webp, else video
+                // For simplicity, we use standard video tag which is responsive
+                mediaHTML = `
+                    <video autoplay loop muted playsinline class="w-full h-auto" ${sizeStyle}>
+                        <source src="${content.media.url}" type="video/mp4">
+                    </video>
+                `;
+            } else {
+                mediaHTML = `<img src="${content.media.url}" alt="${content.media.caption}" class="w-full h-auto object-contain" ${sizeStyle}>`;
+            }
+            mediaBox.innerHTML = mediaHTML;
+
+            // Title & Intro
+            document.getElementById('content-title').innerText = content.title;
+            document.getElementById('content-intro').innerHTML = content.intro; // Use innerHTML to allow tags
+
+            // --- RIGHT COLUMN RENDER ---
+            const dynamicContainer = document.getElementById('dynamic-content');
+
+            content.content.forEach(block => {
+                let blockHTML = '';
+
+                switch(block.type) {
+                    case 'headline':
+                        blockHTML = `<h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-4 border-l-4 border-blue-500 pl-4">${block.text}</h2>`;
+                        break;
+                    case 'text':
+                        blockHTML = `<div class="text-gray-600 dark:text-gray-300 leading-relaxed formatted-text">${block.text}</div>`;
+                        break;
+                    case 'paypal_button':
+                        blockHTML = `
+                            <div class="py-4">
+                                <a href="https://www.paypal.com/donate?hosted_button_id=${block.hosted_id}" target="_blank" class="paypal-btn shadow-lg hover:shadow-xl transform transition hover:-translate-y-1">
+                                    <i data-lucide="heart" class="w-5 h-5 text-red-600"></i>
+                                    <span>${block.text || "Donate"}</span>
+                                </a>
+                            </div>`;
+                        break;
+                    case 'link':
+                        blockHTML = `
+                            <a href="${block.url}" class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-medium hover:underline mt-2">
+                                <i data-lucide="${block.action === 'download' ? 'download' : 'link'}" class="w-4 h-4"></i>
+                                ${block.text}
+                            </a>`;
+                        break;
+                }
+                dynamicContainer.innerHTML += blockHTML;
+            });
+
+            // Initialize Icons
+            lucide.createIcons();
+        }
+
+        loadPortfolio();
+    </script>
+</body>
+</html>
