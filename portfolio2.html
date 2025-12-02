@@ -95,9 +95,9 @@
             const response = await fetch('content.json');
             const data = await response.json();
 
-            // 1. Identify current page ID from filename (e.g. "portfolio1.html" -> "portfolio1")
+            // 1. Identify current page ID from filename
             const path = window.location.pathname;
-            const pageId = path.substring(path.lastIndexOf('/') + 1).replace('.html', '') || 'portfolio1'; // default for testing
+            const pageId = path.substring(path.lastIndexOf('/') + 1).replace('.html', '') || 'portfolio1'; 
 
             const site = data.site;
             const content = data.en[pageId];
@@ -129,8 +129,6 @@
 
 
             // --- LEFT COLUMN RENDER ---
-            
-            // Media
             const mediaBox = document.getElementById('media-container');
             if (content.media.use_soft_bg) mediaBox.classList.add('soft-bg');
             
@@ -138,8 +136,6 @@
             const sizeStyle = `style="width: ${content.media.size_percentage}%; margin: 0 auto; display: block;"`;
 
             if (content.media.type === 'video') {
-                // Check if mobile for animated webp, else video
-                // For simplicity, we use standard video tag which is responsive
                 mediaHTML = `
                     <video autoplay loop muted playsinline class="w-full h-auto" ${sizeStyle}>
                         <source src="${content.media.url}" type="video/mp4">
@@ -150,9 +146,8 @@
             }
             mediaBox.innerHTML = mediaHTML;
 
-            // Title & Intro
             document.getElementById('content-title').innerText = content.title;
-            document.getElementById('content-intro').innerHTML = content.intro; // Use innerHTML to allow tags
+            document.getElementById('content-intro').innerHTML = content.intro; 
 
             // --- RIGHT COLUMN RENDER ---
             const dynamicContainer = document.getElementById('dynamic-content');
@@ -187,7 +182,6 @@
                 dynamicContainer.innerHTML += blockHTML;
             });
 
-            // Initialize Icons
             lucide.createIcons();
         }
 
