@@ -65,7 +65,7 @@
         "type": "video",
         "size_percentage": 100,
         "caption": "The autor Michael K. Mueller",
-        "use_soft_bg": true,
+        "use_soft_bg": false,
         "animated_webp_url": ""
       },
       "content": [
