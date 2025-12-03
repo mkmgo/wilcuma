@@ -29,7 +29,7 @@
           "id": "portfolio1",
           "color": "#46ba16",
           "image": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693659/00_index_blfowe.png",
-          "use_soft_bg": true,
+          "use_soft_bg": false,
           "symbol": "code-square",
           "title": "Envy and Fairness",
           "description": "Envy is essentially the feeling you get when your expectations for fairness are let down. It can only really take root in societies where people have a baseline belief that things are supposed to be fair and that everyone has a shot."
