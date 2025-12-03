@@ -95,9 +95,10 @@
     </main>
 
     <footer class="w-full py-6 text-center text-gray-500 text-sm border-t border-gray-200 dark:border-gray-800">
-        <div class="max-w-6xl mx-auto flex items-center justify-center gap-3">
+        <div class="max-w-6xl mx-auto flex items-center justify-center gap-2">
+            <span id="footer-part1"></span>
             <img id="footer-logo" src="" alt="Logo" class="h-4 w-4 object-contain opacity-50">
-            <span id="footer-text"></span>
+            <span id="footer-part2"></span>
         </div>
     </footer>
 
@@ -110,8 +111,11 @@
             const site = data.site;
             document.getElementById('site-name').innerText = site.name;
             document.getElementById('site-logo').src = site.logo_url;
-            document.getElementById('footer-text').innerText = `${site.footer1} ${site.footer2}`;
-            document.getElementById('footer-logo').src = site.logo_url; // Set Footer Logo Source
+            
+            // Footer Parts
+            document.getElementById('footer-part1').innerText = site.footer1;
+            document.getElementById('footer-logo').src = site.logo_url;
+            document.getElementById('footer-part2').innerText = site.footer2;
 
             // --- 2. Navigation Logic ---
             const prevBtn = document.getElementById('nav-prev');
