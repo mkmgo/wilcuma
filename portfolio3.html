@@ -10,7 +10,7 @@
     
     <script>
         tailwind.config = {
-            darkMode: 'media',
+            darkMode: 'class', // Vital for theme toggle
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
@@ -64,7 +64,7 @@
         .formatted-text h2 { font-size: 1.875rem; } 
         .formatted-text h3 { font-size: 1.5rem; }   
 
-        /* Dynamic Nuance Color Styles */
+        /* Dynamic Nuance Color Styles (Nav, Links) */
         .nuance-text { color: var(--nuance-color-light) !important; }
         .dark .nuance-text { color: var(--nuance-color-dark) !important; }
         .nuance-border-l { border-color: var(--nuance-color-light) !important; }
@@ -135,6 +135,24 @@
     </footer>
 
     <script>
+        // --- COLOR HELPER FUNCTIONS ---
+        function isValidHex(color) {
+            return /^#([0-9A-F]{3}){1,2}$/i.test(color);
+        }
+        function lightenColor(hex, percent) {
+            let r = parseInt(hex.substring(1, 3), 16),
+                g = parseInt(hex.substring(3, 5), 16),
+                b = parseInt(hex.substring(5, 7), 16);
+
+            const amount = Math.floor((255 * percent) / 100);
+
+            r = Math.min(255, r + amount);
+            g = Math.min(255, g + amount);
+            b = Math.min(255, b + amount);
+
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        }
+        
         async function loadPortfolio() {
             const response = await fetch('content.json');
             const data = await response.json();
@@ -153,20 +171,24 @@
 
             // --- DYNAMIC NUANCE COLOR SETUP (FIX) ---
             let nuanceColor = null;
-            // Find the tile color corresponding to the current page (if it is a hex code)
-            const currentTile = data.en.index.tiles.find(tile => tile.id === pageId);
-            if (currentTile && currentTile.color.startsWith('#')) {
+            let currentTile = data.en.index.tiles.find(tile => tile.id === pageId);
+
+            // 1. Try to get color from the tile (must be a hex code)
+            if (currentTile && isValidHex(currentTile.color)) {
                 nuanceColor = currentTile.color;
-            } else if (site.nuance_color && site.nuance_color.startsWith('#')) {
-                 nuanceColor = site.nuance_color;
-            } else {
-                // Fallback to a default blue if no hex is provided
-                nuanceColor = '#2563eb'; 
+            } 
+            // 2. Fallback to site.nuance_color (must be a hex code)
+            else if (site.nuance_color && isValidHex(site.nuance_color)) {
+                nuanceColor = site.nuance_color; // Using #1700f6 from content.json
+            }
+            // 3. Final fallback
+            else {
+                nuanceColor = '#2563eb'; // Default Blue
             }
 
             // Set the CSS variables for use in <style>
             document.documentElement.style.setProperty('--nuance-color-light', nuanceColor);
-            // Lighten for dark mode accent (simplified color logic)
+            // Lighten for dark mode accent for better contrast
             const darkNuance = lightenColor(nuanceColor, 15); 
             document.documentElement.style.setProperty('--nuance-color-dark', darkNuance);
             
@@ -191,7 +213,7 @@
             }
 
             const nextLink = document.getElementById('nav-next');
-            nextLink.innerText = site.navigation_next;
+            nextLink.innerText = content.next_story_link || site.navigation_next; // Use site.navigation_next if next_story_link is empty string
             if(content.next_story_link) {
                 nextLink.href = content.next_story_link;
                 nextLink.classList.remove('opacity-50', 'pointer-events-none');
@@ -202,11 +224,12 @@
             const mediaBox = document.getElementById('media-container');
             const isMobile = window.innerWidth < 768; 
 
-            // Apply soft background class if requested 
             if (content.media.use_soft_bg) mediaBox.classList.add('soft-bg');
             
             let mediaHTML = '';
-            const sizeStyle = `style="width: ${content.media.size_percentage}%; margin: 0 auto; display: block;"`;
+            // Only apply size_percentage if it is 100 or less
+            const sizeStyle = (content.media.size_percentage <= 100) ? `style="width: ${content.media.size_percentage}%; margin: 0 auto; display: block;"` : `style="width: 100%; margin: 0 auto; display: block;"`;
+
 
             if (content.media.type === 'video') {
                 let videoSrc = content.media.url; 
@@ -223,7 +246,6 @@
                     </video>
                 `;
             } else {
-                // Handles PNG, JPG, etc.
                 mediaHTML = `<img src="${content.media.url}" alt="${content.media.caption}" class="w-full h-auto object-contain" ${sizeStyle}>`;
             }
             mediaBox.innerHTML = mediaHTML;
@@ -250,7 +272,7 @@
                         blockHTML = `<h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-4 border-l-4 nuance-border-l pl-4">${block.text}</h2>`;
                         break;
                     case 'text':
-                    case 'intro': // Explicitly handle 'Intro' type (though default should catch it)
+                    case 'intro': // Explicitly handle 'Intro' type (including the "h1" block)
                         // Use innerHTML and .formatted-text for rich content
                         blockHTML = `<div class="text-gray-600 dark:text-gray-300 leading-relaxed formatted-text">${block.text}</div>`;
                         break;
@@ -272,7 +294,7 @@
                             </a>`;
                         break;
                     default:
-                        // FIX: Default case handles any unrecognised type (like 'Intro' if not explicitly handled)
+                        // Default case for any unrecognised type that still has content
                         if (block.text) {
                             blockHTML = `<div class="text-gray-600 dark:text-gray-300 leading-relaxed formatted-text">${block.text}</div>`;
                         }
@@ -283,22 +305,6 @@
 
             lucide.createIcons();
         }
-        
-        // Helper function to lighten a hex color (for dark mode accent)
-        function lightenColor(hex, percent) {
-            let r = parseInt(hex.substring(1, 3), 16),
-                g = parseInt(hex.substring(3, 5), 16),
-                b = parseInt(hex.substring(5, 7), 16);
-
-            const amount = Math.floor((255 * percent) / 100);
-
-            r = Math.min(255, r + amount);
-            g = Math.min(255, g + amount);
-            b = Math.min(255, b + amount);
-
-            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-        }
-
 
         loadPortfolio();
     </script>
