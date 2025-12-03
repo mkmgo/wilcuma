@@ -12,8 +12,8 @@
     "navigation_next": "▷",
     "navigation_separator": "|",
     "navigation_previous": "◁",
-    "name": "WILCUMA - WELLCOME - BIENVENUE",
-    "nuance_color": "#e0ff00",
+    "name": "WILCUMA",
+    "nuance_color": "#1700f6",
     "footer1": "© 2025/2026",
     "logo_url": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764520461/imprintic-emblem_olmzlh.png",
     "footer2": "All rights reserved."
@@ -70,7 +70,7 @@
       },
       "content": [
         {
-          "type": "headline",
+          "type": "Intro",
           "text": "In places where the less fortunate and those at the bottom of the ladder have zero chance of ever getting ahead or building a career—a situation often seen in the Global South—envy doesn't really flourish. That's because those who are struggling grew up without any expectation of fairness. It's a different story from Europe, for example, where equal opportunity has always been a stated goal of politicians. Ultimately, envy is the downside of being let down by a society you believed was fair. "
         },
         {
