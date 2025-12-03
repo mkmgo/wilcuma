@@ -27,7 +27,7 @@
       "tiles": [
         {
           "id": "portfolio1",
-          "color": "#768910",
+          "color": "#46ba16",
           "image": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693659/00_index_blfowe.png",
           "use_soft_bg": true,
           "symbol": "code-square",
