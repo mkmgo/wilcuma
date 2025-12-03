@@ -34,17 +34,13 @@
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); 
         }
 
-        /* --- LIGHT MODE (DEFAULT) --- */
-        .tile-red-nuance { background-color: hsl(0, 0%, 98%); border-color: #e5e7eb; }
-        .tile-blue-nuance { background-color: hsl(0, 0%, 98%); border-color: #e5e7eb; }
+        /* --- Default Nuance Classes (Fallback/Basic) --- */
+        .tile-default-bg { background-color: hsl(0, 0%, 98%); border-color: #e5e7eb; }
         .soft-bg { background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(200,200,200,0.2) 100%); }
 
         /* --- DARK MODE (SYSTEM PREFERENCE) --- */
         @media (prefers-color-scheme: dark) {
-            .tile-red-nuance { background-color: #3b0718 !important; border-color: #7f1d1d !important; }
-            .tile-red-nuance:hover { border-color: #dc2626 !important; }
-            .tile-blue-nuance { background-color: #0c1a3b !important; border-color: #1e3a8a !important; }
-            .tile-blue-nuance:hover { border-color: #2563eb !important; }
+            .dark .tile-default-bg { background-color: #1f2937; border-color: #374151; }
             .soft-bg { background: radial-gradient(circle, rgba(50,50,50,0.5) 0%, rgba(0,0,0,0.2) 100%) !important; }
         }
         
@@ -97,7 +93,7 @@
     <footer class="w-full py-6 text-center text-gray-500 text-sm border-t border-gray-200 dark:border-gray-800">
         <div class="max-w-6xl mx-auto flex items-center justify-center gap-2">
             <span id="footer-part1"></span>
-            <img id="footer-logo" src="" alt="Logo" class="h-6 w-6 object-contain opacity-50">
+            <img id="footer-logo" src="" alt="Logo" class="h-8 w-8 object-contain opacity-50">
             <span id="footer-part2"></span>
         </div>
     </footer>
@@ -138,20 +134,55 @@
             document.getElementById('page-title').innerText = pageData.title;
             document.getElementById('page-intro').innerText = pageData.intro;
 
-            // --- 4. Render Tiles ---
+            // --- 4. Render Tiles (Nuance Color Fix) ---
             const grid = document.getElementById('tiles-grid');
             
             pageData.tiles.forEach(tile => {
-                const nuanceClass = tile.color === 'red' ? 'tile-red-nuance' : 'tile-blue-nuance';
-                const textClass = tile.color === 'red' ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400';
-                const bgClass = tile.color === 'red' ? 'bg-red-100 dark:bg-red-900/30' : 'bg-blue-100 dark:bg-blue-900/30';
+                let nuanceStyle = '';
+                let nuanceClasses = 'tile-default-bg';
+                
+                // Determine the base color (hex or fallback)
+                const tileColor = tile.color.startsWith('#') ? tile.color : (tile.color === 'red' ? '#dc2626' : '#2563eb'); 
+                
+                // Calculate colors for light mode (Accent and near-white BG)
+                const accentColor = tileColor;
+                const lightBgColor = getLightNuance(tileColor);
+
+                // Set CSS variables for inline styles
+                nuanceStyle = `
+                    --tile-accent: ${accentColor}; 
+                    --tile-bg: ${lightBgColor};
+                    border-color: var(--tile-accent);
+                    background-color: var(--tile-bg);
+                `;
+
                 const softBgClass = tile.use_soft_bg ? 'soft-bg' : '';
+                
+                // Calculate colors for dark mode (Lighter Accent and darker BG)
+                const darkAccent = lightenColor(tileColor, 30);
+                const darkBg = darkenColor(tileColor, 50);
+
+                // Dynamically inject dark mode styles for this specific tile by ID
+                const styleSheet = document.createElement("style");
+                styleSheet.type = "text/css";
+                styleSheet.innerText = `
+                    @media (prefers-color-scheme: dark) {
+                        .dark #tile-${tile.id} {
+                            --tile-accent: ${darkAccent};
+                            --tile-bg: ${darkBg};
+                            border-color: var(--tile-accent) !important;
+                            background-color: var(--tile-bg) !important;
+                        }
+                    }
+                `;
+                document.head.appendChild(styleSheet);
+
 
                 const cardHTML = `
-                <a href="${tile.id}.html" class="tile-card ${nuanceClass} p-6 rounded-xl border-2 flex flex-col h-full cursor-pointer text-left block group">
+                <a id="tile-${tile.id}" href="${tile.id}.html" class="tile-card ${nuanceClasses} p-6 rounded-xl border-2 flex flex-col h-full cursor-pointer text-left block group hover:border-[var(--tile-accent)]" style="${nuanceStyle}">
                     <div class="flex justify-between items-start mb-4">
-                        <div class="${textClass}" data-lucide="${tile.symbol}"></div>
-                        <span class="text-xs font-medium ${textClass} ${bgClass} px-3 py-1 rounded-full group-hover:scale-105 transition-transform">View</span>
+                        <div class="tile-accent-text" data-lucide="${tile.symbol}" style="color: var(--tile-accent);"></div>
+                        <span class="text-xs font-medium tile-accent-text tile-accent-bg px-3 py-1 rounded-full group-hover:scale-105 transition-transform" style="color: var(--tile-accent); background-color: var(--tile-bg);">View</span>
                     </div>
                     
                     <div class="mb-4 overflow-hidden rounded-lg h-40 bg-gray-200 dark:bg-gray-800 relative flex items-center justify-center ${softBgClass}">
@@ -168,6 +199,31 @@
             });
 
             lucide.createIcons();
+        }
+        
+        // --- Color Helper Functions ---
+        function getLightNuance(hex) {
+            let r = parseInt(hex.substring(1, 3), 16), g = parseInt(hex.substring(3, 5), 16), b = parseInt(hex.substring(5, 7), 16);
+            r = Math.floor((r + 255 * 9) / 10);
+            g = Math.floor((g + 255 * 9) / 10);
+            b = Math.floor((b + 255 * 9) / 10);
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        }
+        function lightenColor(hex, percent) {
+            let r = parseInt(hex.substring(1, 3), 16), g = parseInt(hex.substring(3, 5), 16), b = parseInt(hex.substring(5, 7), 16);
+            const amount = Math.floor((255 * percent) / 100);
+            r = Math.min(255, r + amount);
+            g = Math.min(255, g + amount);
+            b = Math.min(255, b + amount);
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        }
+        function darkenColor(hex, percent) {
+            let r = parseInt(hex.substring(1, 3), 16), g = parseInt(hex.substring(3, 5), 16), b = parseInt(hex.substring(5, 7), 16);
+            const amount = Math.floor((255 * percent) / 100);
+            r = Math.max(0, r - amount);
+            g = Math.max(0, g - amount);
+            b = Math.max(0, b - amount);
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
         }
 
         loadContent();

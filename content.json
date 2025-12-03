@@ -27,7 +27,7 @@
       "tiles": [
         {
           "id": "portfolio1",
-          "color": "red",
+          "color": "#768910",
           "image": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693659/00_index_blfowe.png",
           "use_soft_bg": true,
           "symbol": "code-square",
@@ -36,7 +36,7 @@
         },
         {
           "id": "portfolio2",
-          "color": "blue",
+          "color": "#46ba16",
           "image": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693658/02_portfolio2_iiqtcw.jpg",
           "use_soft_bg": false,
           "symbol": "monitor",
@@ -71,11 +71,11 @@
       "content": [
         {
           "type": "Intro",
-          "text": "In places where the less fortunate and those at the bottom of the ladder have zero chance of ever getting ahead or building a career—a situation often seen in the Global South—envy doesn't really flourish. That's because those who are struggling grew up without any expectation of fairness. It's a different story from Europe, for example, where equal opportunity has always been a stated goal of politicians. Ultimately, envy is the downside of being let down by a society you believed was fair. "
+          "text": "<h1>In Less Fortunate Places</h1>"
         },
         {
-          "type": "intro",
-          "text": "Your kind support is a keystone for Maya's way to blossom. <br><br>We are fully transparent and will provide you with every detail."
+          "type": "text",
+          "text": "In places where the less fortunate and those at the bottom of the ladder have zero chance of ever getting ahead or building a career—a situation often seen in the Global South—envy doesn't really flourish. That's because those who are struggling grew up without any expectation of fairness. It's a different story from Europe, for example, where equal opportunity has always been a stated goal of politicians. Ultimately, envy is the downside of being let down by a society you believed was fair. "
         },
         {
           "type": "paypal_button",
