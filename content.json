@@ -62,10 +62,10 @@
       "next_story_link": "portfolio2.html",
       "media": {
         "url": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693659/00_index_blfowe.png",
-        "type": "video",
+        "type": "image",
         "size_percentage": 100,
         "caption": "The autor Michael K. Mueller",
-        "use_soft_bg": false,
+        "use_soft_bg": true,
         "animated_webp_url": ""
       },
       "content": [
