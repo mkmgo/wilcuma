@@ -27,21 +27,21 @@
       "tiles": [
         {
           "id": "portfolio1",
-          "color": "#a2140f",
+          "color": "#ab201c",
           "image": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693659/00_index_blfowe.png",
-          "use_soft_bg": false,
+          "use_soft_bg": true,
           "symbol": "code-square",
           "title": "Envy and Fairness",
           "description": "Envy is essentially the feeling you get when your expectations for fairness are let down. It can only really take root in societies where people have a baseline belief that things are supposed to be fair and that everyone has a shot."
         },
         {
           "id": "portfolio2",
-          "color": "#46ba16",
-          "image": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693658/02_portfolio2_iiqtcw.jpg",
-          "use_soft_bg": false,
+          "color": "#439c21",
+          "image": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764789290/rumination_qk4ruj.png",
+          "use_soft_bg": true,
           "symbol": "monitor",
-          "title": "Data & Impact",
-          "description": "View the supporting metrics and evidence."
+          "title": "Meditation and Awareness",
+          "description": "Meditation and Awareness"
         },
         {
           "id": "portfolio3",
@@ -85,17 +85,17 @@
       ]
     },
     "portfolio2": {
-      "title": "Supporting Metrics",
-      "intro": "The responsiveness is key. When the screen is wide, the image and text sit side-by-side.",
+      "title": "Meditation and Awareness",
+      "intro": "<p><i>Wed 3 Dec 2025</i></p><p><strong>To avoid brooding, which is a form of negative and repetitive thinking (rumination), you can use distraction, mindfulness, and cognitive-behavioral techniques.</strong><br>These exercises help break the cycle of unproductive thoughts and shift your focus toward the present.</strong></p><p><strong>Acknowledge and label thoughts</strong><br> When you notice yourself starting to brood, simply label the thought without judgment. For example, say to yourself, \"That's a 'worry' thought,\" or \"I'm ruminating again.\" This creates distance between you and your thoughts, reminding you that they are just mental events, not facts.</p><p><strong>Practice \"Leaves on a Stream\"</strong><br>Visualize yourself sitting by a stream and placing each negative or repetitive thought on a leaf floating by. Watch it float away without chasing it. This exercise teaches you to observe your thoughts without getting caught up in them.</p><p><strong>Focus on your senses</strong><br>Engage your five senses to ground yourself in the present moment. <blockquote><i>Name five things you can see, four things you can touch, three things you can hear, two things you can smell, and one thing you can taste.</i></blockquote><br>This technique is especially useful during moments of intense worry.</p><p><strong>Practice mindful breathing</strong><br>Pay close attention to the sensation of your breath as you inhale and exhale. When your mind starts to wander, gently redirect your focus back to your breathing.</p>",
       "page_url": "portfolio2.html",
       "prev_story_link": "portfolio1.html",
       "next_story_link": "portfolio3.html",
       "media": {
-        "url": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693658/02_portfolio2_iiqtcw.jpg",
+        "url": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764789290/rumination_qk4ruj.png",
         "type": "image",
         "size_percentage": 60,
         "caption": "Statistics showing our primary results.",
-        "use_soft_bg": false
+        "use_soft_bg": true
       },
       "content": [
         {
