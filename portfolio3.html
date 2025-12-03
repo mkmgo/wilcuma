@@ -10,7 +10,7 @@
     
     <script>
         tailwind.config = {
-            darkMode: 'class', // Vital for theme toggle
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
@@ -55,7 +55,7 @@
             margin-top: 1.5rem;
             margin-bottom: 0.75rem;
             line-height: 1.25;
-            color: var(--nuance-color-light); 
+            color: var(--nuance-color-light); /* Nuance text color for embedded headings */
         }
         .dark .formatted-text h1, .dark .formatted-text h2, .dark .formatted-text h3 {
              color: var(--nuance-color-dark);
@@ -81,17 +81,17 @@
     <header class="w-full p-4 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             
-            <a href="index.html" class="flex items-center gap-2 text-xl font-bold hover:text-[var(--nuance-color-light)] dark:hover:text-[var(--nuance-color-dark)] transition">
-                <span id="nav-home-icon" class="nuance-text"></span> 
+            <a href="index.html" class="flex items-center gap-2 text-xl font-bold transition">
+                <span id="nav-home-icon" class="nuance-text hover:text-opacity-80"></span> 
                 <span id="site-name-nav" class="hidden sm:inline"></span>
             </a>
             
             <div class="flex items-center gap-6">
                 
                 <div class="flex items-center gap-4 text-lg">
-                    <a id="nav-prev" href="#" class="nuance-text opacity-50 pointer-events-none transition"></a>
+                    <a id="nav-prev" href="#" class="nuance-text opacity-50 pointer-events-none transition hover:text-opacity-100"></a> 
                     <span id="nav-sep" class="text-gray-400"></span>
-                    <a id="nav-next" href="#" class="nuance-text opacity-50 pointer-events-none transition"></a>
+                    <a id="nav-next" href="#" class="nuance-text opacity-50 pointer-events-none transition hover:text-opacity-100"></a>
                 </div>
 
                 <div class="lang-switch text-sm font-medium text-gray-500 dark:text-gray-400 flex gap-2 border-l border-gray-300 dark:border-gray-700 pl-4">
@@ -169,7 +169,7 @@
                 return;
             }
 
-            // --- DYNAMIC NUANCE COLOR SETUP (FIX) ---
+            // --- DYNAMIC NUANCE COLOR SETUP (FIX for page nuance) ---
             let nuanceColor = null;
             let currentTile = data.en.index.tiles.find(tile => tile.id === pageId);
 
@@ -179,7 +179,7 @@
             } 
             // 2. Fallback to site.nuance_color (must be a hex code)
             else if (site.nuance_color && isValidHex(site.nuance_color)) {
-                nuanceColor = site.nuance_color; // Using #1700f6 from content.json
+                nuanceColor = site.nuance_color; 
             }
             // 3. Final fallback
             else {
@@ -213,21 +213,20 @@
             }
 
             const nextLink = document.getElementById('nav-next');
-            nextLink.innerText = content.next_story_link || site.navigation_next; // Use site.navigation_next if next_story_link is empty string
+            nextLink.innerText = site.navigation_next;
             if(content.next_story_link) {
                 nextLink.href = content.next_story_link;
                 nextLink.classList.remove('opacity-50', 'pointer-events-none');
             }
 
 
-            // --- MEDIA RENDER (with Caption FIX) ---
+            // --- MEDIA RENDER (with Caption) ---
             const mediaBox = document.getElementById('media-container');
             const isMobile = window.innerWidth < 768; 
 
             if (content.media.use_soft_bg) mediaBox.classList.add('soft-bg');
             
             let mediaHTML = '';
-            // Only apply size_percentage if it is 100 or less
             const sizeStyle = (content.media.size_percentage <= 100) ? `style="width: ${content.media.size_percentage}%; margin: 0 auto; display: block;"` : `style="width: 100%; margin: 0 auto; display: block;"`;
 
 
@@ -250,15 +249,14 @@
             }
             mediaBox.innerHTML = mediaHTML;
             
-            // Display Caption FIX
+            // Display Caption
             if (content.media.caption) {
                 document.getElementById('media-caption').innerText = content.media.caption;
             }
 
 
-            // --- CONTENT RENDER (HTML/MD and Content Array FIX) ---
+            // --- CONTENT RENDER (HTML/MD and Content Array) ---
             document.getElementById('content-title').innerText = content.title;
-            // Use innerHTML for formatting support in intro
             document.getElementById('content-intro').innerHTML = content.intro; 
 
             const dynamicContainer = document.getElementById('dynamic-content');
@@ -268,12 +266,10 @@
 
                 switch(block.type.toLowerCase()) {
                     case 'headline':
-                        // Use dynamic nuance border-left
                         blockHTML = `<h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-4 border-l-4 nuance-border-l pl-4">${block.text}</h2>`;
                         break;
                     case 'text':
-                    case 'intro': // Explicitly handle 'Intro' type (including the "h1" block)
-                        // Use innerHTML and .formatted-text for rich content
+                    case 'intro': 
                         blockHTML = `<div class="text-gray-600 dark:text-gray-300 leading-relaxed formatted-text">${block.text}</div>`;
                         break;
                     case 'paypal_button':
@@ -286,7 +282,6 @@
                             </div>`;
                         break;
                     case 'link':
-                        // Use dynamic nuance text color
                         blockHTML = `
                             <a href="${block.url}" class="inline-flex items-center gap-2 nuance-text font-medium hover:underline mt-2">
                                 <i data-lucide="${block.action === 'download' ? 'download' : 'link'}" class="w-4 h-4"></i>
@@ -294,7 +289,6 @@
                             </a>`;
                         break;
                     default:
-                        // Default case for any unrecognised type that still has content
                         if (block.text) {
                             blockHTML = `<div class="text-gray-600 dark:text-gray-300 leading-relaxed formatted-text">${block.text}</div>`;
                         }
