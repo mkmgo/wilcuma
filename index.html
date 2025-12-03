@@ -10,7 +10,7 @@
     
     <script>
         tailwind.config = {
-            darkMode: 'media', // Relies on System Settings (prefers-color-scheme)
+            darkMode: 'media', // Uses System Settings (prefers-color-scheme)
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
@@ -40,28 +40,20 @@
         .soft-bg { background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(200,200,200,0.2) 100%); }
 
         /* --- DARK MODE (SYSTEM PREFERENCE) --- */
-        /* We use @media query here to forcefully override light mode when system is dark */
+        /* Explicit media query to ensure tiles are dark when system is dark */
         @media (prefers-color-scheme: dark) {
-            
-            /* Red Nuance Dark */
             .tile-red-nuance { 
                 background-color: #3b0718 !important; 
                 border-color: #7f1d1d !important; 
             }
-            .tile-red-nuance:hover { 
-                border-color: #dc2626 !important; 
-            }
+            .tile-red-nuance:hover { border-color: #dc2626 !important; }
 
-            /* Blue Nuance Dark */
             .tile-blue-nuance { 
                 background-color: #0c1a3b !important; 
                 border-color: #1e3a8a !important; 
             }
-            .tile-blue-nuance:hover { 
-                border-color: #2563eb !important; 
-            }
+            .tile-blue-nuance:hover { border-color: #2563eb !important; }
 
-            /* Soft BG Dark */
             .soft-bg { 
                 background: radial-gradient(circle, rgba(50,50,50,0.5) 0%, rgba(0,0,0,0.2) 100%) !important; 
             }
@@ -75,23 +67,30 @@
 
 <body class="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 flex flex-col">
 
-    <header class="w-full p-6 flex justify-between items-center max-w-6xl mx-auto">
-        <div class="flex items-center gap-3">
-            <img id="site-logo" src="" alt="Logo" class="h-8 w-8 object-contain">
-            <h1 id="site-name" class="text-2xl font-bold tracking-tight"></h1>
-        </div>
-        
-        <div class="flex items-center gap-6">
-            <div class="hidden sm:flex items-center gap-4 text-lg">
-                <span id="nav-home" class="text-blue-600 dark:text-blue-400 cursor-default font-bold"></span>
-                <span id="nav-sep" class="text-gray-400"></span>
-                <span id="nav-next" class="text-gray-300 dark:text-gray-700 cursor-not-allowed"></span>
+    <header class="w-full p-4 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            
+            <div class="flex items-center gap-3">
+                <img id="site-logo" src="" alt="Logo" class="h-8 w-8 object-contain">
+                <h1 id="site-name" class="text-xl md:text-2xl font-bold tracking-tight"></h1>
             </div>
             
-            <div class="lang-switch text-sm font-medium text-gray-500 dark:text-gray-400 flex gap-2">
-                <span class="active text-gray-900 dark:text-gray-100">EN</span>
-                <span class="hover:text-gray-900 dark:hover:text-gray-100">DE</span>
+            <div class="flex items-center gap-6">
+                
+                <div class="flex items-center gap-4 text-lg">
+                    <a id="nav-prev" href="#" class="hover:text-blue-600 dark:hover:text-blue-400 opacity-50 pointer-events-none transition"></a>
+                    
+                    <span id="nav-sep" class="text-gray-400"></span>
+                    
+                    <a id="nav-next" href="#" class="hover:text-blue-600 dark:hover:text-blue-400 opacity-50 pointer-events-none transition"></a>
+                </div>
+                
+                <div class="lang-switch text-sm font-medium text-gray-500 dark:text-gray-400 flex gap-2 border-l border-gray-300 dark:border-gray-700 pl-4">
+                    <span class="active text-gray-900 dark:text-gray-100">EN</span>
+                    <span class="hover:text-gray-900 dark:hover:text-gray-100">DE</span>
+                </div>
             </div>
+
         </div>
     </header>
 
@@ -114,38 +113,49 @@
 
     <script>
         async function loadContent() {
+            // Using fetch('content.json') to simulate live environment
             const response = await fetch('content.json'); 
             const data = await response.json();
 
-            // Set Global Site Data
+            // --- 1. Global Site Settings ---
             const site = data.site;
             document.getElementById('site-name').innerText = site.name;
             document.getElementById('site-logo').src = site.logo_url;
             document.getElementById('footer-text').innerText = `${site.footer1} ${site.footer2}`;
 
-            // Set Navigation Symbols
-            document.getElementById('nav-home').innerText = site.navigation_home;
-            document.getElementById('nav-sep').innerText = site.navigation_separator;
-            document.getElementById('nav-next').innerText = site.navigation_next;
+            // --- 2. Navigation Logic ---
+            const prevBtn = document.getElementById('nav-prev');
+            const nextBtn = document.getElementById('nav-next');
+            const navSep = document.getElementById('nav-sep');
 
-            // Set Page Specific Data (EN Index)
+            // Set Icons
+            prevBtn.innerText = site.navigation_previous;
+            navSep.innerText = site.navigation_separator;
+            nextBtn.innerText = site.navigation_next;
+
+            // Page Specific Data (Index)
             const pageData = data.en.index;
+
+            // Handle "Next" Button
+            if (pageData.next_story_link) {
+                nextBtn.href = pageData.next_story_link;
+                // Enable button look and function
+                nextBtn.classList.remove('opacity-50', 'pointer-events-none'); 
+            }
+            
+            // --- 3. Page Content ---
             document.getElementById('page-title').innerText = pageData.title;
             document.getElementById('page-intro').innerText = pageData.intro;
 
-            // Render Tiles
+            // --- 4. Render Tiles ---
             const grid = document.getElementById('tiles-grid');
             
             pageData.tiles.forEach(tile => {
-                // Determine Nuance Class
                 const nuanceClass = tile.color === 'red' ? 'tile-red-nuance' : 'tile-blue-nuance';
                 const textClass = tile.color === 'red' ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400';
                 const bgClass = tile.color === 'red' ? 'bg-red-100 dark:bg-red-900/30' : 'bg-blue-100 dark:bg-blue-900/30';
-                
-                // Soft BG Logic
                 const softBgClass = tile.use_soft_bg ? 'soft-bg' : '';
 
-                // Construct Card HTML
                 const cardHTML = `
                 <a href="${tile.id}.html" class="tile-card ${nuanceClass} p-6 rounded-xl border-2 flex flex-col h-full cursor-pointer text-left block group">
                     <div class="flex justify-between items-start mb-4">

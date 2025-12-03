@@ -1,7 +1,10 @@
 {
   "settings": {
     "defaultLanguage": "en",
-    "supportedLanguages": ["en", "de"],
+    "supportedLanguages": [
+      "en",
+      "de"
+    ],
     "base_url": "/"
   },
   "site": {
@@ -20,6 +23,7 @@
       "title": "Creative Work & Projects",
       "intro": "A showcase of my latest work, utilizing responsive design and Cloudinary media assets.",
       "page_url": "index.html",
+      "next_story_link": "portfolio1.html",
       "tiles": [
         {
           "id": "portfolio1",
