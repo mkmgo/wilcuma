@@ -156,7 +156,7 @@
             const mediaBox = document.getElementById('media-container');
             const isMobile = window.innerWidth < 768; 
 
-            // Apply soft background class if requested (CSS !important handles override)
+            // Apply soft background class if requested 
             if (content.media.use_soft_bg) mediaBox.classList.add('soft-bg');
             
             let mediaHTML = '';
@@ -214,6 +214,13 @@
                                 <i data-lucide="${block.action === 'download' ? 'download' : 'link'}" class="w-4 h-4"></i>
                                 ${block.text}
                             </a>`;
+                        break;
+                    // FIX: This default case handles custom types like "In Less Fortunate Places" 
+                    // by rendering them as a standard text block if they contain text.
+                    default:
+                        if (block.text) {
+                            blockHTML = `<div class="text-gray-600 dark:text-gray-300 leading-relaxed formatted-text">${block.text}</div>`;
+                        }
                         break;
                 }
                 dynamicContainer.innerHTML += blockHTML;
