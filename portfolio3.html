@@ -44,6 +44,10 @@
         
         .formatted-text strong { font-weight: 700; color: inherit; }
         .formatted-text p { margin-bottom: 1rem; }
+
+        /* Language Switcher Styling */
+        .lang-switch span { cursor: pointer; transition: color 0.2s; }
+        .lang-switch span.active { font-weight: bold; border-bottom: 2px solid currentColor; }
     </style>
 </head>
 
@@ -57,10 +61,18 @@
                 <span id="site-name-nav" class="hidden sm:inline"></span>
             </a>
             
-            <div class="flex items-center gap-4 text-lg">
-                <a id="nav-prev" href="#" class="hover:text-blue-600 dark:hover:text-blue-400 opacity-50 pointer-events-none transition"></a>
-                <span id="nav-sep" class="text-gray-400"></span>
-                <a id="nav-next" href="#" class="hover:text-blue-600 dark:hover:text-blue-400 opacity-50 pointer-events-none transition"></a>
+            <div class="flex items-center gap-6">
+                
+                <div class="flex items-center gap-4 text-lg">
+                    <a id="nav-prev" href="#" class="hover:text-blue-600 dark:hover:text-blue-400 opacity-50 pointer-events-none transition"></a>
+                    <span id="nav-sep" class="text-gray-400"></span>
+                    <a id="nav-next" href="#" class="hover:text-blue-600 dark:hover:text-blue-400 opacity-50 pointer-events-none transition"></a>
+                </div>
+
+                <div class="lang-switch text-sm font-medium text-gray-500 dark:text-gray-400 flex gap-2 border-l border-gray-300 dark:border-gray-700 pl-4">
+                    <span class="active text-gray-900 dark:text-gray-100">EN</span>
+                    <span class="hover:text-gray-900 dark:hover:text-gray-100">DE</span>
+                </div>
             </div>
         </div>
     </header>
@@ -88,7 +100,10 @@
     </main>
 
     <footer class="w-full py-6 text-center text-gray-500 text-sm border-t border-gray-200 dark:border-gray-800 mt-12">
-        <span id="footer-text"></span>
+        <div class="max-w-6xl mx-auto flex items-center justify-center gap-3">
+            <img id="footer-logo" src="" alt="Logo" class="h-4 w-4 object-contain opacity-50">
+            <span id="footer-text"></span>
+        </div>
     </footer>
 
     <script>
@@ -108,9 +123,14 @@
                 return;
             }
 
-            // --- NAVIGATION SETUP ---
+            // --- SITE DATA & FOOTER ---
             document.getElementById('site-name-nav').innerText = site.name;
             document.getElementById('nav-home-icon').innerText = site.navigation_home;
+            document.getElementById('footer-text').innerText = `${site.footer1} ${site.footer2}`;
+            document.getElementById('footer-logo').src = site.logo_url; // Set Footer Logo Source
+
+
+            // --- NAVIGATION SETUP ---
             document.getElementById('nav-sep').innerText = site.navigation_separator;
 
             const prevLink = document.getElementById('nav-prev');
@@ -126,20 +146,30 @@
                 nextLink.href = content.next_story_link;
                 nextLink.classList.remove('opacity-50', 'pointer-events-none');
             }
-            document.getElementById('footer-text').innerText = `${site.footer1} ${site.footer2}`;
 
 
-            // --- LEFT COLUMN RENDER ---
+            // --- MEDIA RENDER (with Mobile Optimization) ---
             const mediaBox = document.getElementById('media-container');
+            const isMobile = window.innerWidth < 768; // Check if screen is less than md breakpoint
+
             if (content.media.use_soft_bg) mediaBox.classList.add('soft-bg');
             
             let mediaHTML = '';
             const sizeStyle = `style="width: ${content.media.size_percentage}%; margin: 0 auto; display: block;"`;
 
             if (content.media.type === 'video') {
+                let videoSrc = content.media.url; // Default to MP4
+                let videoType = 'video/mp4';
+                
+                // Use WebM/Animated WebP on mobile if URL is provided
+                if (isMobile && content.media.animated_webp_url) {
+                    videoSrc = content.media.animated_webp_url;
+                    videoType = 'video/webm'; 
+                }
+                
                 mediaHTML = `
                     <video autoplay loop muted playsinline class="w-full h-auto" ${sizeStyle}>
-                        <source src="${content.media.url}" type="video/mp4">
+                        <source src="${videoSrc}" type="${videoType}">
                     </video>
                 `;
             } else {
@@ -147,10 +177,11 @@
             }
             mediaBox.innerHTML = mediaHTML;
 
+
+            // --- CONTENT RENDER ---
             document.getElementById('content-title').innerText = content.title;
             document.getElementById('content-intro').innerHTML = content.intro; 
 
-            // --- RIGHT COLUMN RENDER ---
             const dynamicContainer = document.getElementById('dynamic-content');
 
             content.content.forEach(block => {

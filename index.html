@@ -10,7 +10,7 @@
     
     <script>
         tailwind.config = {
-            darkMode: 'media', // Uses System Settings (prefers-color-scheme)
+            darkMode: 'media', 
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
@@ -40,23 +40,12 @@
         .soft-bg { background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(200,200,200,0.2) 100%); }
 
         /* --- DARK MODE (SYSTEM PREFERENCE) --- */
-        /* Explicit media query to ensure tiles are dark when system is dark */
         @media (prefers-color-scheme: dark) {
-            .tile-red-nuance { 
-                background-color: #3b0718 !important; 
-                border-color: #7f1d1d !important; 
-            }
+            .tile-red-nuance { background-color: #3b0718 !important; border-color: #7f1d1d !important; }
             .tile-red-nuance:hover { border-color: #dc2626 !important; }
-
-            .tile-blue-nuance { 
-                background-color: #0c1a3b !important; 
-                border-color: #1e3a8a !important; 
-            }
+            .tile-blue-nuance { background-color: #0c1a3b !important; border-color: #1e3a8a !important; }
             .tile-blue-nuance:hover { border-color: #2563eb !important; }
-
-            .soft-bg { 
-                background: radial-gradient(circle, rgba(50,50,50,0.5) 0%, rgba(0,0,0,0.2) 100%) !important; 
-            }
+            .soft-bg { background: radial-gradient(circle, rgba(50,50,50,0.5) 0%, rgba(0,0,0,0.2) 100%) !important; }
         }
         
         /* Language Switcher Styling */
@@ -79,9 +68,7 @@
                 
                 <div class="flex items-center gap-4 text-lg">
                     <a id="nav-prev" href="#" class="hover:text-blue-600 dark:hover:text-blue-400 opacity-50 pointer-events-none transition"></a>
-                    
                     <span id="nav-sep" class="text-gray-400"></span>
-                    
                     <a id="nav-next" href="#" class="hover:text-blue-600 dark:hover:text-blue-400 opacity-50 pointer-events-none transition"></a>
                 </div>
                 
@@ -108,12 +95,14 @@
     </main>
 
     <footer class="w-full py-6 text-center text-gray-500 text-sm border-t border-gray-200 dark:border-gray-800">
-        <span id="footer-text"></span>
+        <div class="max-w-6xl mx-auto flex items-center justify-center gap-3">
+            <img id="footer-logo" src="" alt="Logo" class="h-4 w-4 object-contain opacity-50">
+            <span id="footer-text"></span>
+        </div>
     </footer>
 
     <script>
         async function loadContent() {
-            // Using fetch('content.json') to simulate live environment
             const response = await fetch('content.json'); 
             const data = await response.json();
 
@@ -122,24 +111,21 @@
             document.getElementById('site-name').innerText = site.name;
             document.getElementById('site-logo').src = site.logo_url;
             document.getElementById('footer-text').innerText = `${site.footer1} ${site.footer2}`;
+            document.getElementById('footer-logo').src = site.logo_url; // Set Footer Logo Source
 
             // --- 2. Navigation Logic ---
             const prevBtn = document.getElementById('nav-prev');
             const nextBtn = document.getElementById('nav-next');
             const navSep = document.getElementById('nav-sep');
 
-            // Set Icons
             prevBtn.innerText = site.navigation_previous;
             navSep.innerText = site.navigation_separator;
             nextBtn.innerText = site.navigation_next;
 
-            // Page Specific Data (Index)
             const pageData = data.en.index;
 
-            // Handle "Next" Button
             if (pageData.next_story_link) {
                 nextBtn.href = pageData.next_story_link;
-                // Enable button look and function
                 nextBtn.classList.remove('opacity-50', 'pointer-events-none'); 
             }
             
