@@ -13,7 +13,7 @@
     "navigation_separator": "|",
     "navigation_previous": "◁",
     "name": "WILCUMA",
-    "nuance_color": "#1700f6",
+    "nuance_color": "#702a17",
     "footer1": "© 2025/2026",
     "logo_url": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764520461/imprintic-emblem_olmzlh.png",
     "footer2": "All rights reserved."
@@ -27,7 +27,7 @@
       "tiles": [
         {
           "id": "portfolio1",
-          "color": "#46ba16",
+          "color": "#a2140f",
           "image": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693659/00_index_blfowe.png",
           "use_soft_bg": false,
           "symbol": "code-square",
