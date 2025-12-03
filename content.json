@@ -31,8 +31,8 @@
           "image": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693659/00_index_blfowe.png",
           "use_soft_bg": true,
           "symbol": "code-square",
-          "title": "A Warm Welcome",
-          "description": "Read about our initial concept and goals."
+          "title": "Envy and Fairness",
+          "description": "Envy is essentially the feeling you get when your expectations for fairness are let down. It can only really take root in societies where people have a baseline belief that things are supposed to be fair and that everyone has a shot."
         },
         {
           "id": "portfolio2",
@@ -55,18 +55,18 @@
       ]
     },
     "portfolio1": {
-      "title": "The Initial Spark",
-      "intro": "Welcome to the first chapter. We are using Flexbox to ensure the media and text flow seamlessly. <br><strong>This is bold HTML text.</strong>",
+      "title": "Envy and Fairness",
+      "intro": "Envy is essentially the feeling you get when your expectations for fairness are let down. It can only really take root in societies where people have a baseline belief that things are supposed to be fair and that everyone has a shot.",
       "page_url": "portfolio1.html",
       "prev_story_link": "index.html",
       "next_story_link": "portfolio2.html",
       "media": {
-        "url": "https://res.cloudinary.com/dqwm4pdbz/video/upload/v1764693664/01_portfolo1_ryc5ke.mp4",
+        "url": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693659/00_index_blfowe.png",
         "type": "video",
         "size_percentage": 100,
-        "caption": "The first visual illustrating the core concept.",
-        "use_soft_bg": false,
-        "animated_webp_url": "https://res.cloudinary.com/dqwm4pdbz/video/upload/v1764693659/01_portfolio1_o1xmxb.webm"
+        "caption": "The autor Michael K. Mueller",
+        "use_soft_bg": true,
+        "animated_webp_url": ""
       },
       "content": [
         {
