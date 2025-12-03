@@ -135,6 +135,14 @@
     </footer>
 
     <script>
+        // --- DARK MODE SYSTEM PREFERENCE CHECK (FIX) ---
+        const htmlEl = document.documentElement;
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            htmlEl.classList.add('dark');
+        } else {
+            htmlEl.classList.remove('dark');
+        }
+        
         // --- COLOR HELPER FUNCTIONS ---
         function isValidHex(color) {
             return /^#([0-9A-F]{3}){1,2}$/i.test(color);
