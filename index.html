@@ -60,7 +60,7 @@
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             
             <div class="flex items-center gap-2">
-                <span id="nav-home-icon" data-lucide="layout-grid" class="h-6 w-6 text-blue-600 dark:text-blue-400"></span>
+                <span id="nav-home-icon" class="h-6 w-6 flex items-center justify-center text-xl text-blue-600 dark:text-blue-400"></span> 
                 <h1 id="site-name" class="text-xl md:text-2xl font-bold tracking-tight"></h1>
             </div>
             
@@ -120,15 +120,13 @@
             const prevBtn = document.getElementById('nav-prev');
             const nextBtn = document.getElementById('nav-next');
             const navSep = document.getElementById('nav-sep');
+            const homeIcon = document.getElementById('nav-home-icon');
 
             prevBtn.innerText = site.navigation_previous;
             navSep.innerText = site.navigation_separator;
             nextBtn.innerText = site.navigation_next;
+            homeIcon.innerText = site.navigation_home; // Set the Home Symbol
 
-            // Set the symbol in the header title (using lucide)
-            const homeIcon = document.getElementById('nav-home-icon');
-            homeIcon.setAttribute('data-lucide', 'layout-grid'); // Using a default grid icon for the hub page
-            
             const pageData = data.en.index;
 
             if (pageData.next_story_link) {
