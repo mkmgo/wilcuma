@@ -21,7 +21,7 @@
   "en": {
     "index": {
       "title": "Michael K. Mueller",
-      "intro": "A showcase of my latest work, utilizing responsive design and Cloudinary media assets.",
+      "intro": "A showcase of my work.",
       "page_url": "index.html",
       "next_story_link": "portfolio1.html",
       "tiles": [
@@ -49,6 +49,15 @@
           "image": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693658/02_portfolio2_iiqtcw.jpg",
           "use_soft_bg": false,
           "symbol": "flame",
+          "title": "Future Outlook",
+          "description": "Exploring what lies ahead for the project."
+        },
+        {
+          "id": "portfolio3",
+          "color": "blue",
+          "image": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693658/02_portfolio2_iiqtcw.jpg",
+          "use_soft_bg": false,
+          "symbol": "info",
           "title": "Future Outlook",
           "description": "Exploring what lies ahead for the project."
         }
