@@ -96,7 +96,7 @@
     </footer>
 
     <script>
-        // --- DARK MODE SYSTEM PREFERENCE CHECK (FIX) ---
+        // --- DARK MODE SYSTEM PREFERENCE CHECK ---
         const htmlEl = document.documentElement;
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             htmlEl.classList.add('dark');
@@ -137,12 +137,31 @@
         async function loadContent() {
             const response = await fetch('content.json'); 
             const data = await response.json();
+            const config = data.page_config;
+            const indexData = data.en.index;
 
-            // --- 1. Global Site Settings ---
-            const site = data.site;
-            document.getElementById('site-name').innerText = site.name;
+            // --- 1. Map Site Settings from page_config ---
+            const site = {
+                name: config.preferences.site_title,
+                navigation_home: config.navigation.navigation_home,
+                navigation_separator: config.navigation.navigation_separator,
+                navigation_next: config.navigation.navigation_next,
+                navigation_previous: config.navigation.navigation_previous,
+                footer1: config.footer.footer_text1,
+                footer2: config.footer.footer_text2,
+                logo_url: config.footer.footer_logo_url
+            };
             
-            // Footer Parts
+            // Map Index Page Data (to preserve original script logic)
+            const pageData = {
+                title: indexData.index_content.index_title,
+                intro: indexData.index_content.intro_text,
+                next_story_link: indexData.index_urls.next_story_url,
+                tiles: indexData.tiles
+            };
+
+            // Apply Site Data
+            document.getElementById('site-name').innerText = site.name;
             document.getElementById('footer-part1').innerText = site.footer1;
             document.getElementById('footer-logo').src = site.logo_url;
             document.getElementById('footer-part2').innerText = site.footer2;
@@ -158,8 +177,6 @@
             nextBtn.innerText = site.navigation_next;
             homeIcon.innerText = site.navigation_home; 
 
-            const pageData = data.en.index;
-
             if (pageData.next_story_link) {
                 nextBtn.href = pageData.next_story_link;
                 nextBtn.classList.remove('opacity-50', 'pointer-events-none'); 
@@ -173,23 +190,25 @@
             const grid = document.getElementById('tiles-grid');
             
             pageData.tiles.forEach(tile => {
+                // Map nested tile properties
+                const tileConfig = tile.config;
+                const tileMedia = tile.media;
+                const tileContent = tile.content;
+
                 const nuanceClasses = 'tile-default-bg';
                 
-                // Determine the base color (hex or fallback)
                 let tileColor = '#2563eb'; // Default Blue
-                if (isValidHex(tile.color)) {
-                    tileColor = tile.color;
-                } else if (tile.color === 'red') {
-                    tileColor = '#dc2626';
+                if (isValidHex(tileConfig.color)) {
+                    tileColor = tileConfig.color;
                 }
                 
                 // Calculate colors for light mode
                 const accentColor = tileColor;
                 const lightBgColor = getMidLightNuance(tileColor); 
 
-                // Calculate colors for dark mode (Lighter dark background that retains the hue - FIX)
+                // Calculate colors for dark mode 
                 const darkAccent = lightenColor(tileColor, 20); 
-                const darkBg = darkenColor(tileColor, 50); // Less darkening (60->50) to make hue more visible
+                const darkBg = darkenColor(tileColor, 50); // Less darkening (50) to make hue more visible
                 
                 // Set light mode CSS variables for inline styles
                 let nuanceStyle = `
@@ -199,13 +218,13 @@
                     background-color: var(--tile-bg); 
                 `;
 
-                const softBgClass = tile.use_soft_bg ? 'soft-bg' : '';
+                const softBgClass = tileMedia.media_use_soft_bg ? 'soft-bg' : '';
                 
                 // Dynamically inject dark mode styles for this specific tile by ID
                 const styleSheet = document.createElement("style");
                 styleSheet.type = "text/css";
                 styleSheet.innerText = `
-                    .dark #tile-${tile.id} {
+                    .dark #tile-${tileConfig.id} {
                         --tile-accent: ${darkAccent} !important;
                         --tile-bg: ${darkBg} !important;
                         border-color: var(--tile-accent) !important;
@@ -216,19 +235,19 @@
 
 
                 const cardHTML = `
-                <a id="tile-${tile.id}" href="${tile.id}.html" class="tile-card ${nuanceClasses} p-6 rounded-xl border-2 flex flex-col h-full cursor-pointer text-left block group hover:border-[var(--tile-accent)]" style="${nuanceStyle}">
+                <a id="tile-${tileConfig.id}" href="${tileConfig.id}.html" class="tile-card ${nuanceClasses} p-6 rounded-xl border-2 flex flex-col h-full cursor-pointer text-left block group hover:border-[var(--tile-accent)]" style="${nuanceStyle}">
                     <div class="flex justify-between items-start mb-4">
-                        <div class="tile-accent-text" data-lucide="${tile.symbol}" style="color: var(--tile-accent);"></div>
+                        <div class="tile-accent-text" data-lucide="${tileConfig.symbol}" style="color: var(--tile-accent);"></div>
                         <span class="text-xs font-medium tile-accent-text px-3 py-1 rounded-full group-hover:scale-105 transition-transform" style="color: var(--tile-accent); background-color: var(--tile-bg);">View</span>
                     </div>
                     
                     <div class="mb-4 overflow-hidden rounded-lg h-40 bg-gray-200 dark:bg-gray-800 relative flex items-center justify-center ${softBgClass}">
-                        <img src="${tile.image}" alt="${tile.title}" class="max-h-full max-w-full object-contain p-2">
+                        <img src="${tileMedia.media_url}" alt="${tileContent.tile_story_title}" class="max-h-full max-w-full object-contain p-2">
                     </div>
 
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">${tile.title}</h3>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">${tileContent.tile_story_title}</h3>
                     <p class="text-gray-600 dark:text-gray-300 text-sm flex-grow">
-                        ${tile.description}
+                        ${tileContent.tile_story_description}
                     </p>
                 </a>
                 `;

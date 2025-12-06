@@ -47,7 +47,7 @@
         .soft-bg { background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(200,200,200,0.2) 100%) !important; }
         .dark .soft-bg { background: radial-gradient(circle, rgba(50,50,50,0.5) 0%, rgba(0,0,0,0.2) 100%) !important; }
         
-        /* FIX: Enhanced HTML/MD Formatting */
+        /* FIX: Enhanced HTML/MD Formatting (Nuance for embedded headings) */
         .formatted-text strong { font-weight: 700; color: inherit; }
         .formatted-text p { margin-bottom: 1rem; }
         .formatted-text h1, .formatted-text h2, .formatted-text h3 {
@@ -55,7 +55,7 @@
             margin-top: 1.5rem;
             margin-bottom: 0.75rem;
             line-height: 1.25;
-            color: var(--nuance-color-light); /* Nuance text color for embedded headings */
+            color: var(--nuance-color-light); 
         }
         .dark .formatted-text h1, .dark .formatted-text h2, .dark .formatted-text h3 {
              color: var(--nuance-color-dark);
@@ -135,7 +135,7 @@
     </footer>
 
     <script>
-        // --- DARK MODE SYSTEM PREFERENCE CHECK (FIX) ---
+        // --- DARK MODE SYSTEM PREFERENCE CHECK ---
         const htmlEl = document.documentElement;
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             htmlEl.classList.add('dark');
@@ -164,34 +164,43 @@
         async function loadPortfolio() {
             const response = await fetch('content.json');
             const data = await response.json();
+            const config = data.page_config;
 
-            // 1. Identify current page ID from filename
+            // 1. Identify current page ID from filename (e.g., 'story1' from 'story1.html')
             const path = window.location.pathname;
-            const pageId = path.substring(path.lastIndexOf('/') + 1).replace('.html', '') || 'portfolio1'; 
+            const pageId = path.substring(path.lastIndexOf('/') + 1).replace('.html', '') || 'story1'; 
 
-            const site = data.site;
-            const content = data.en[pageId];
+            // --- 2. Map Site Settings from page_config ---
+            const site = {
+                name: config.preferences.site_title,
+                navigation_home: config.navigation.navigation_home,
+                navigation_separator: config.navigation.navigation_separator,
+                navigation_next: config.navigation.navigation_next,
+                navigation_previous: config.navigation.navigation_previous,
+                footer1: config.footer.footer_text1,
+                footer2: config.footer.footer_text2,
+                logo_url: config.footer.footer_logo_url
+            };
+            const nuanceColorFallback = config.preferences.site_nuance_color;
 
-            if(!content) {
-                document.body.innerHTML = "<div class='p-10 text-center'><h1>Page Content Not Found in JSON</h1></div>";
+            // --- 3. Find full story content in index.tiles (New JSON structure) ---
+            const storyTile = data.en.index.tiles.find(tile => tile.config.id === pageId);
+
+            if(!storyTile) {
+                document.body.innerHTML = "<div class='p-10 text-center'><h1>Story Content Not Found in JSON</h1></div>";
                 return;
             }
 
-            // --- DYNAMIC NUANCE COLOR SETUP (FIX for page nuance) ---
-            let nuanceColor = null;
-            let currentTile = data.en.index.tiles.find(tile => tile.id === pageId);
+            // --- 4. DYNAMIC NUANCE COLOR SETUP ---
+            let nuanceColor = '#2563eb'; // Default Blue
 
-            // 1. Try to get color from the tile (must be a hex code)
-            if (currentTile && isValidHex(currentTile.color)) {
-                nuanceColor = currentTile.color;
+            // 1. Get color from the found tile
+            if (isValidHex(storyTile.config.color)) {
+                nuanceColor = storyTile.config.color;
             } 
-            // 2. Fallback to site.nuance_color (must be a hex code)
-            else if (site.nuance_color && isValidHex(site.nuance_color)) {
-                nuanceColor = site.nuance_color; 
-            }
-            // 3. Final fallback
-            else {
-                nuanceColor = '#2563eb'; // Default Blue
+            // 2. Fallback to site nuance color
+            else if (nuanceColorFallback && isValidHex(nuanceColorFallback)) {
+                nuanceColor = nuanceColorFallback; 
             }
 
             // Set the CSS variables for use in <style>
@@ -200,51 +209,55 @@
             const darkNuance = lightenColor(nuanceColor, 15); 
             document.documentElement.style.setProperty('--nuance-color-dark', darkNuance);
             
-            // --- SITE DATA & FOOTER ---
+            // --- 5. SITE DATA & FOOTER ---
             document.getElementById('site-name-nav').innerText = site.name;
             document.getElementById('nav-home-icon').innerText = site.navigation_home;
             
-            // Footer Parts
             document.getElementById('footer-part1').innerText = site.footer1;
             document.getElementById('footer-logo').src = site.logo_url;
             document.getElementById('footer-part2').innerText = site.footer2;
 
 
-            // --- NAVIGATION SETUP ---
+            // --- 6. NAVIGATION SETUP ---
             document.getElementById('nav-sep').innerText = site.navigation_separator;
 
             const prevLink = document.getElementById('nav-prev');
             prevLink.innerText = site.navigation_previous;
-            if(content.prev_story_link) {
-                prevLink.href = content.prev_story_link;
+            if(storyTile.config.prev_story_url) {
+                prevLink.href = storyTile.config.prev_story_url;
                 prevLink.classList.remove('opacity-50', 'pointer-events-none');
             }
 
             const nextLink = document.getElementById('nav-next');
             nextLink.innerText = site.navigation_next;
-            if(content.next_story_link) {
-                nextLink.href = content.next_story_link;
+            if(storyTile.config.next_story_url) {
+                nextLink.href = storyTile.config.next_story_url;
                 nextLink.classList.remove('opacity-50', 'pointer-events-none');
             }
 
 
-            // --- MEDIA RENDER (with Caption) ---
+            // --- 7. MEDIA RENDER (with Caption) ---
             const mediaBox = document.getElementById('media-container');
             const isMobile = window.innerWidth < 768; 
 
-            if (content.media.use_soft_bg) mediaBox.classList.add('soft-bg');
+            if (storyTile.media.media_use_soft_bg) mediaBox.classList.add('soft-bg');
             
             let mediaHTML = '';
-            const sizeStyle = (content.media.size_percentage <= 100) ? `style="width: ${content.media.size_percentage}%; margin: 0 auto; display: block;"` : `style="width: 100%; margin: 0 auto; display: block;"`;
+            const sizeValue = parseInt(storyTile.media.media_size) || 100;
+            const sizeStyle = (sizeValue <= 100) ? `style="width: ${sizeValue}%; margin: 0 auto; display: block;"` : `style="width: 100%; margin: 0 auto; display: block;"`;
 
 
-            if (content.media.type === 'video') {
-                let videoSrc = content.media.url; 
+            // Check if it's a video based on the URL ending
+            const isVideo = storyTile.media.media_url.match(/\.(mp4|webm|mov|ogg)$/i); 
+
+            if (isVideo) {
+                let videoSrc = storyTile.media.media_url; 
                 let videoType = 'video/mp4';
                 
-                if (isMobile && content.media.animated_webp_url) {
-                    videoSrc = content.media.animated_webp_url;
-                    videoType = 'video/webm'; 
+                // Use mobile URL/webp if available and on mobile
+                if (isMobile && storyTile.media.media_mobile_url && storyTile.media.media_mobile_url.match(/\.webp$/i)) {
+                    videoSrc = storyTile.media.media_mobile_url;
+                    videoType = 'image/webp'; // WebP is often used for animated media on mobile
                 }
                 
                 mediaHTML = `
@@ -253,57 +266,66 @@
                     </video>
                 `;
             } else {
-                mediaHTML = `<img src="${content.media.url}" alt="${content.media.caption}" class="w-full h-auto object-contain" ${sizeStyle}>`;
+                mediaHTML = `<img src="${storyTile.media.media_url}" alt="${storyTile.media.media_caption || storyTile.content.tile_story_title}" class="w-full h-auto object-contain" ${sizeStyle}>`;
             }
             mediaBox.innerHTML = mediaHTML;
             
             // Display Caption
-            if (content.media.caption) {
-                document.getElementById('media-caption').innerText = content.media.caption;
+            if (storyTile.media.media_caption) {
+                document.getElementById('media-caption').innerText = storyTile.media.media_caption;
             }
 
 
-            // --- CONTENT RENDER (HTML/MD and Content Array) ---
-            document.getElementById('content-title').innerText = content.title;
-            document.getElementById('content-intro').innerHTML = content.intro; 
+            // --- 8. CONTENT RENDER (Manual Block Assembly for new JSON structure) ---
+            document.getElementById('content-title').innerText = storyTile.content.tile_story_title;
+            // Use description as the intro content for the story page
+            document.getElementById('content-intro').innerHTML = storyTile.content.tile_story_description; 
 
             const dynamicContainer = document.getElementById('dynamic-content');
+            dynamicContainer.innerHTML = ''; // Clear previous content
 
-            content.content.forEach(block => {
-                let blockHTML = '';
+            // Block 1: Subtitle 1 + Text 1
+            if (storyTile.content.story_subtitle1) {
+                dynamicContainer.innerHTML += `<h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-4 border-l-4 nuance-border-l pl-4">${storyTile.content.story_subtitle1}</h2>`;
+            }
+            if (storyTile.content.story_text1) {
+                dynamicContainer.innerHTML += `<div class="text-gray-600 dark:text-gray-300 leading-relaxed formatted-text">${storyTile.content.story_text1}</div>`;
+            }
 
-                switch(block.type.toLowerCase()) {
-                    case 'headline':
-                        blockHTML = `<h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-4 border-l-4 nuance-border-l pl-4">${block.text}</h2>`;
-                        break;
-                    case 'text':
-                    case 'intro': 
-                        blockHTML = `<div class="text-gray-600 dark:text-gray-300 leading-relaxed formatted-text">${block.text}</div>`;
-                        break;
-                    case 'paypal_button':
-                        blockHTML = `
-                            <div class="py-4">
-                                <a href="https://www.paypal.com/donate?hosted_button_id=${block.hosted_id}" target="_blank" class="paypal-btn shadow-lg hover:shadow-xl transform transition hover:-translate-y-1">
-                                    <i data-lucide="heart" class="w-5 h-5 text-red-600"></i>
-                                    <span>${block.text || "Support a Way Forward"}</span>
-                                </a>
-                            </div>`;
-                        break;
-                    case 'link':
-                        blockHTML = `
-                            <a href="${block.url}" class="inline-flex items-center gap-2 nuance-text font-medium hover:underline mt-2">
-                                <i data-lucide="${block.action === 'download' ? 'download' : 'link'}" class="w-4 h-4"></i>
-                                ${block.text}
-                            </a>`;
-                        break;
-                    default:
-                        if (block.text) {
-                            blockHTML = `<div class="text-gray-600 dark:text-gray-300 leading-relaxed formatted-text">${block.text}</div>`;
-                        }
-                        break;
-                }
-                dynamicContainer.innerHTML += blockHTML;
-            });
+            // Block 2: Subtitle 2 + Text 2 (Handle optional keys)
+            const subtitle2 = storyTile.content['story_subtitle2'] || storyTile.content['story_subtitle2(optional)'];
+            const text2 = storyTile.content['story_text2'] || storyTile.content['story_text2)optional)'];
+            
+            if (subtitle2) {
+                dynamicContainer.innerHTML += `<h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-4 border-l-4 nuance-border-l pl-4">${subtitle2}</h2>`;
+            }
+            if (text2) {
+                dynamicContainer.innerHTML += `<div class="text-gray-600 dark:text-gray-300 leading-relaxed formatted-text">${text2}</div>`;
+            }
+
+            // Block 3: Attachment
+            const block = storyTile.attachement;
+            let blockHTML = '';
+
+            switch(block.type.toLowerCase()) {
+                case 'paypal_button':
+                    blockHTML = `
+                        <div class="py-4">
+                            <a href="https://www.paypal.com/donate?hosted_button_id=${block.hosted_id}" target="_blank" class="paypal-btn shadow-lg hover:shadow-xl transform transition hover:-translate-y-1">
+                                <i data-lucide="heart" class="w-5 h-5 text-red-600"></i>
+                                <span>${block.text || "Support a Way Forward"}</span>
+                            </a>
+                        </div>`;
+                    break;
+                case 'link':
+                    blockHTML = `
+                        <a href="${block.url}" class="inline-flex items-center gap-2 nuance-text font-medium hover:underline mt-2">
+                            <i data-lucide="${block.action === 'download' ? 'download' : 'link'}" class="w-4 h-4"></i>
+                            ${block.text}
+                        </a>`;
+                    break;
+            }
+            dynamicContainer.innerHTML += blockHTML;
 
             lucide.createIcons();
         }
