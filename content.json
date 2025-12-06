@@ -3,8 +3,8 @@
     "preferences": {
       "site_title": "Wilcuma",
       "site_subtitle": "Stories, Activities and Portfolio",
-      "site_symbol": "home",
-      "site_nuance_color": "#200f4c"
+      "site_symbol": "book-marked",
+      "site_nuance_color": "#2b9054"
     },
     "language": {
       "language_default": "en",
@@ -15,24 +15,23 @@
       "language_base_url": "/"
     },
     "navigation": {
-      "navigation_home": "☰",
       "navigation_separator": "|",
       "navigation_next": "▷",
       "navigation_previous": "◁"
     },
     "footer": {
-      "footer_nuance_color": "#702a17",
       "footer_text1": "© 2025/2026",
       "footer_logo_url": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764520461/imprintic-emblem_olmzlh.png",
-      "footer_image_size": "50%",
-      "footer_text2": "All rights reserved."
+      "footer_logo_size": "100%",
+      "footer_text2": "All rights reserved.",
+      "display_foorter_bg": true,
+      "footer_bg_color": "#702a17"
     }
   },
   "en": {
     "index": {
       "index_urls": {
         "page_url": "index.html",
-        "previous_story_url": null,
         "next_story_url": "story1.html"
       },
       "index_content": {
@@ -47,13 +46,12 @@
             "story_url": "story1.html",
             "prev_story_url": "index.html",
             "next_story_url": "story2.html",
-            "symbol": "book-marked",
-            "height(tile)": "double",
-            "color": "#ab201c"
+            "color": "#ab201c",
+            "symbol": "book-marked"
           },
           "media": {
             "media_url": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693659/00_index_blfowe.png",
-            "media_mobile": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693659/00_index_blfowe.png",
+            "media_mobile-url": "",
             "media_use_soft_bg": true,
             "media_size": "50%",
             "media_caption": "The author Michael K. Mueller"
@@ -79,14 +77,13 @@
             "story_url": "story2.html",
             "prev_story_url": "story1.html",
             "next_story_url": "story3.html",
-            "symbol": "code-square",
-            "height(tile)": "single",
-            "color": "#43ab1c"
+            "color": "#43ab1c",
+            "symbol": "code-square"
           },
           "media": {
             "media_url": "https://res.cloudinary.com/dqwm4pdbz/video/upload/v1764369265/SoH-Intro_seglsu.webm",
             "media_mobile_url": "https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764417329/SoH-Intro_nke18b.webp",
-            "media_use_soft_bg": true,
+            "media_use_soft_bg": false,
             "media_size": "50%",
             "media_caption": "The author Michael K. Mueller"
           },

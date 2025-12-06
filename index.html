@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wilcuma - My Portfolio</title>
+    <title>Wilcuma - Index</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
@@ -34,7 +34,15 @@
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); 
         }
 
-        /* --- Default Nuance Classes (Fallback/Base) --- */
+        /* --- Global Nuance Variable Fallbacks --- */
+        :root {
+            --site-nuance-light: #2563eb; /* Default Blue */
+            --site-nuance-dark: #60a5fa;
+            --footer-bg-light: #f3f4f6;
+            --footer-bg-dark: #1f2937;
+        }
+
+        /* --- Default Tile Nuance Classes (Fallback/Base) --- */
         .tile-default-bg { background-color: hsl(0, 0%, 98%) !important; border-color: #e5e7eb; }
         .soft-bg { background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(200,200,200,0.2) 100%); }
 
@@ -52,17 +60,20 @@
     <header class="w-full p-4 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             
-            <div class="flex items-center gap-2">
-                <span id="nav-home-icon" class="h-6 w-6 flex items-center justify-center text-xl text-blue-600 dark:text-blue-400"></span> 
-                <h1 id="site-name" class="text-xl md:text-2xl font-bold tracking-tight"></h1>
-            </div>
+            <a href="index.html" class="flex items-center gap-2 text-xl font-bold transition">
+                <span id="nav-home-icon" class="h-6 w-6 flex items-center justify-center text-xl" style="color: var(--site-nuance-light);"><i data-lucide="" id="site-symbol-icon" class="w-6 h-6"></i></span> 
+                <div class="flex flex-col">
+                    <h1 id="site-name" class="text-xl md:text-2xl font-bold tracking-tight leading-none"></h1>
+                    <p id="site-subtitle" class="text-xs text-gray-500 dark:text-gray-400 font-medium"></p>
+                </div>
+            </a>
             
             <div class="flex items-center gap-6">
                 
-                <div class="flex items-center gap-4 text-lg">
-                    <a id="nav-prev" href="#" class="hover:text-blue-600 dark:hover:text-blue-400 opacity-50 pointer-events-none transition"></a>
+                <div class="flex items-center gap-4 text-lg" style="color: var(--site-nuance-light);">
+                    <a id="nav-prev" href="index.html" class="hover:opacity-80 transition"></a>
                     <span id="nav-sep" class="text-gray-400"></span>
-                    <a id="nav-next" href="#" class="hover:text-blue-600 dark:hover:text-blue-400 opacity-50 pointer-events-none transition"></a>
+                    <a id="nav-next" href="#" class="hover:opacity-80 opacity-50 pointer-events-none transition"></a>
                 </div>
                 
                 <div class="lang-switch text-sm font-medium text-gray-500 dark:text-gray-400 flex gap-2 border-l border-gray-300 dark:border-gray-700 pl-4">
@@ -77,8 +88,8 @@
     <main class="flex-grow px-6 py-10">
         <div class="max-w-6xl mx-auto">
             
-            <section class="mb-12 text-center md:text-left">
-                <h2 id="page-title" class="text-4xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-red-600 dark:from-blue-400 dark:to-red-400"></h2>
+            <section class="mb-12 text-left">
+                <h2 id="page-title" class="text-4xl font-extrabold mb-4 bg-clip-text text-transparent" style="background-image: linear-gradient(to right, var(--site-nuance-light), #94a3b8);"></h2>
                 <p id="page-intro" class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl"></p>
             </section>
 
@@ -87,23 +98,15 @@
         </div>
     </main>
 
-    <footer class="w-full py-6 text-center text-gray-500 text-sm border-t border-gray-200 dark:border-gray-800">
+    <footer id="main-footer" class="w-full py-6 text-center text-gray-900 text-sm border-t border-gray-200 dark:text-gray-100" style="background-color: var(--footer-bg-light);">
         <div class="max-w-6xl mx-auto flex items-center justify-center gap-2">
             <span id="footer-part1"></span>
-            <img id="footer-logo" src="" alt="Logo" class="h-8 w-8 object-contain opacity-50">
+            <img id="footer-logo" src="" alt="Logo" class="object-contain opacity-70" style="width: 100%; height: auto;">
             <span id="footer-part2"></span>
         </div>
     </footer>
 
     <script>
-        // --- DARK MODE SYSTEM PREFERENCE CHECK ---
-        const htmlEl = document.documentElement;
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            htmlEl.classList.add('dark');
-        } else {
-            htmlEl.classList.remove('dark');
-        }
-        
         // --- COLOR HELPER FUNCTIONS ---
         function isValidHex(color) {
             return /^#([0-9A-F]{3}){1,2}$/i.test(color);
@@ -138,123 +141,151 @@
             const response = await fetch('content.json'); 
             const data = await response.json();
             const config = data.page_config;
-            const indexData = data.en.index;
+            const indexData = data[config.language.language_default].index;
 
-            // --- 1. Map Site Settings from page_config ---
-            const site = {
-                name: config.preferences.site_title,
-                navigation_home: config.navigation.navigation_home,
-                navigation_separator: config.navigation.navigation_separator,
-                navigation_next: config.navigation.navigation_next,
-                navigation_previous: config.navigation.navigation_previous,
-                footer1: config.footer.footer_text1,
-                footer2: config.footer.footer_text2,
-                logo_url: config.footer.footer_logo_url
-            };
+            // --- 1. SITE-WIDE CONFIGURATION (The "Frame") ---
+            const preferences = config.preferences;
+            const navigation = config.navigation;
+            const footer = config.footer;
+
+            // Apply Site Nuance Color
+            let siteColor = preferences.site_nuance_color || '#2563eb';
+            if (isValidHex(siteColor)) {
+                // Set CSS Variables for global use (Nav, Title Gradient, etc.)
+                document.documentElement.style.setProperty('--site-nuance-light', siteColor);
+                document.documentElement.style.setProperty('--site-nuance-dark', lightenColor(siteColor, 20));
+            }
+
+            // Apply Navigation Data
+            document.getElementById('site-name').innerText = preferences.site_title;
+            document.getElementById('site-subtitle').innerText = preferences.site_subtitle;
+            document.getElementById('site-symbol-icon').setAttribute('data-lucide', preferences.site_symbol);
             
-            // Map Index Page Data (to preserve original script logic)
-            const pageData = {
-                title: indexData.index_content.index_title,
-                intro: indexData.index_content.intro_text,
-                next_story_link: indexData.index_urls.next_story_url,
-                tiles: indexData.tiles
-            };
-
-            // Apply Site Data
-            document.getElementById('site-name').innerText = site.name;
-            document.getElementById('footer-part1').innerText = site.footer1;
-            document.getElementById('footer-logo').src = site.logo_url;
-            document.getElementById('footer-part2').innerText = site.footer2;
-
-            // --- 2. Navigation Logic ---
-            const prevBtn = document.getElementById('nav-prev');
-            const nextBtn = document.getElementById('nav-next');
             const navSep = document.getElementById('nav-sep');
-            const homeIcon = document.getElementById('nav-home-icon');
+            const nextBtn = document.getElementById('nav-next');
+            const prevBtn = document.getElementById('nav-prev');
+            
+            navSep.innerText = navigation.navigation_separator;
+            nextBtn.innerText = navigation.navigation_next;
+            prevBtn.innerText = navigation.navigation_previous;
 
-            prevBtn.innerText = site.navigation_previous;
-            navSep.innerText = site.navigation_separator;
-            nextBtn.innerText = site.navigation_next;
-            homeIcon.innerText = site.navigation_home; 
-
-            if (pageData.next_story_link) {
-                nextBtn.href = pageData.next_story_link;
+            // Apply Index Page Navigation
+            // Prev always points to home on the index page
+            prevBtn.href = indexData.index_urls.page_url; 
+            // Next points to the first story
+            if (indexData.index_urls.next_story_url) {
+                nextBtn.href = indexData.index_urls.next_story_url;
                 nextBtn.classList.remove('opacity-50', 'pointer-events-none'); 
             }
-            
-            // --- 3. Page Content ---
-            document.getElementById('page-title').innerText = pageData.title;
-            document.getElementById('page-intro').innerText = pageData.intro;
 
-            // --- 4. Render Tiles (Nuance Color Fix) ---
+            // Apply Page Content
+            document.getElementById('page-title').innerText = indexData.index_content.index_title;
+            document.getElementById('page-intro').innerText = indexData.index_content.intro_text;
+            
+            // Apply Footer Data
+            document.getElementById('footer-part1').innerText = footer.footer_text1;
+            document.getElementById('footer-logo').src = footer.footer_logo_url;
+            document.getElementById('footer-logo').style.maxWidth = footer.footer_logo_size;
+            document.getElementById('footer-part2').innerText = footer.footer_text2;
+            
+            // Footer Background Logic
+            const mainFooter = document.getElementById('main-footer');
+            if (footer.display_foorter_bg) {
+                let footerBgColor = footer.footer_bg_color;
+                if (isValidHex(footerBgColor)) {
+                    document.documentElement.style.setProperty('--footer-bg-light', footerBgColor);
+                    // Dark mode version of the footer background
+                    document.documentElement.style.setProperty('--footer-bg-dark', darkenColor(footerBgColor, 40)); 
+                    
+                    // Apply dark mode styling for the footer background
+                    const styleSheet = document.createElement("style");
+                    styleSheet.type = "text/css";
+                    styleSheet.innerText = `
+                        #main-footer { border-color: var(--footer-bg-dark) !important; }
+                        .dark #main-footer { 
+                            background-color: var(--footer-bg-dark) !important;
+                            color: white; 
+                        }
+                        .dark #main-footer img { opacity: 0.9 !important; }
+                    `;
+                    document.head.appendChild(styleSheet);
+                }
+            }
+
+
+            // --- 2. RENDER TILES (Specific Color Nuance) ---
             const grid = document.getElementById('tiles-grid');
             
-            pageData.tiles.forEach(tile => {
-                // Map nested tile properties
+            indexData.tiles.forEach(tile => {
                 const tileConfig = tile.config;
                 const tileMedia = tile.media;
                 const tileContent = tile.content;
 
-                const nuanceClasses = 'tile-default-bg';
-                
-                let tileColor = '#2563eb'; // Default Blue
-                if (isValidHex(tileConfig.color)) {
-                    tileColor = tileConfig.color;
-                }
-                
-                // Calculate colors for light mode
-                const accentColor = tileColor;
-                const lightBgColor = getMidLightNuance(tileColor); 
+                let tileColor = tileConfig.color || siteColor; // Fallback to site color
 
-                // Calculate colors for dark mode 
-                const darkAccent = lightenColor(tileColor, 20); 
-                const darkBg = darkenColor(tileColor, 50); // Less darkening (50) to make hue more visible
-                
-                // Set light mode CSS variables for inline styles
-                let nuanceStyle = `
-                    --tile-accent: ${accentColor}; 
-                    --tile-bg: ${lightBgColor};
-                    border-color: var(--tile-accent);
-                    background-color: var(--tile-bg); 
-                `;
+                if (isValidHex(tileColor)) {
+                    // Calculate colors for light mode
+                    const accentColor = tileColor;
+                    const lightBgColor = getMidLightNuance(tileColor); 
 
-                const softBgClass = tileMedia.media_use_soft_bg ? 'soft-bg' : '';
-                
-                // Dynamically inject dark mode styles for this specific tile by ID
-                const styleSheet = document.createElement("style");
-                styleSheet.type = "text/css";
-                styleSheet.innerText = `
-                    .dark #tile-${tileConfig.id} {
-                        --tile-accent: ${darkAccent} !important;
-                        --tile-bg: ${darkBg} !important;
-                        border-color: var(--tile-accent) !important;
-                        background-color: var(--tile-bg) !important; 
-                    }
-                `;
-                document.head.appendChild(styleSheet);
-
-
-                const cardHTML = `
-                <a id="tile-${tileConfig.id}" href="${tileConfig.id}.html" class="tile-card ${nuanceClasses} p-6 rounded-xl border-2 flex flex-col h-full cursor-pointer text-left block group hover:border-[var(--tile-accent)]" style="${nuanceStyle}">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="tile-accent-text" data-lucide="${tileConfig.symbol}" style="color: var(--tile-accent);"></div>
-                        <span class="text-xs font-medium tile-accent-text px-3 py-1 rounded-full group-hover:scale-105 transition-transform" style="color: var(--tile-accent); background-color: var(--tile-bg);">View</span>
-                    </div>
+                    // Calculate colors for dark mode 
+                    const darkAccent = lightenColor(tileColor, 20); 
+                    const darkBg = darkenColor(tileColor, 50); 
                     
-                    <div class="mb-4 overflow-hidden rounded-lg h-40 bg-gray-200 dark:bg-gray-800 relative flex items-center justify-center ${softBgClass}">
-                        <img src="${tileMedia.media_url}" alt="${tileContent.tile_story_title}" class="max-h-full max-w-full object-contain p-2">
-                    </div>
+                    // Set light mode CSS variables for inline styles
+                    let nuanceStyle = `
+                        --tile-accent: ${accentColor}; 
+                        --tile-bg: ${lightBgColor};
+                        border-color: var(--tile-accent);
+                        background-color: var(--tile-bg); 
+                    `;
 
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">${tileContent.tile_story_title}</h3>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm flex-grow">
-                        ${tileContent.tile_story_description}
-                    </p>
-                </a>
-                `;
-                grid.innerHTML += cardHTML;
+                    const softBgClass = tileMedia.media_use_soft_bg ? 'soft-bg' : '';
+                    
+                    // Dynamically inject dark mode styles for this specific tile by ID
+                    const styleSheet = document.createElement("style");
+                    styleSheet.type = "text/css";
+                    styleSheet.innerText = `
+                        .dark #tile-${tileConfig.id} {
+                            --tile-accent: ${darkAccent} !important;
+                            --tile-bg: ${darkBg} !important;
+                            border-color: var(--tile-accent) !important;
+                            background-color: var(--tile-bg) !important; 
+                        }
+                    `;
+                    document.head.appendChild(styleSheet);
+
+                    // --- HTML GENERATION ---
+                    const cardHTML = `
+                    <a id="tile-${tileConfig.id}" href="${tileConfig.id}.html" class="tile-card p-6 rounded-xl border-2 flex flex-col h-full cursor-pointer text-left block group hover:border-[var(--tile-accent)]" style="${nuanceStyle}">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="tile-accent-text" data-lucide="${tileConfig.symbol}" style="color: var(--tile-accent);"></div>
+                            <span class="text-xs font-medium tile-accent-text px-3 py-1 rounded-full group-hover:scale-105 transition-transform" style="color: var(--tile-accent); background-color: var(--tile-bg);">View</span>
+                        </div>
+                        
+                        <div class="mb-4 overflow-hidden rounded-lg h-40 bg-gray-200 dark:bg-gray-800 relative flex items-center justify-center ${softBgClass}">
+                            <img src="${tileMedia.media_url}" alt="${tileContent.tile_story_title}" class="max-h-full max-w-full object-contain p-2">
+                        </div>
+
+                        <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">${tileContent.tile_story_title}</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm flex-grow">
+                            ${tileContent.tile_story_description}
+                        </p>
+                    </a>
+                    `;
+                    grid.innerHTML += cardHTML;
+                }
             });
 
             lucide.createIcons();
+        }
+
+        // --- DARK MODE SYSTEM PREFERENCE CHECK ---
+        const htmlEl = document.documentElement;
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            htmlEl.classList.add('dark');
+        } else {
+            htmlEl.classList.remove('dark');
         }
 
         loadContent();
