@@ -1,294 +1,207 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wilcuma - Index</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    
-    <script>
-        tailwind.config = {
-            darkMode: 'class', 
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                }
-            }
-        }
-    </script>
-
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        
-        body { font-family: 'Inter', sans-serif; transition: background-color 0.3s, color 0.3s; }
-        
-        /* Base Tile Transition */
-        .tile-card { 
-            transition: all 0.3s ease-in-out; 
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); 
-        }
-        .tile-card:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); 
-        }
-
-        /* --- Global Nuance Variable Fallbacks --- */
-        :root {
-            --site-nuance-light: #2563eb; /* Default Blue */
-            --site-nuance-dark: #60a5fa;
-            --footer-bg-light: #f3f4f6;
-            --footer-bg-dark: #1f2937;
-        }
-
-        /* --- Default Tile Nuance Classes (Fallback/Base) --- */
-        .tile-default-bg { background-color: hsl(0, 0%, 98%) !important; border-color: #e5e7eb; }
-        .soft-bg { background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(200,200,200,0.2) 100%); }
-
-        /* --- DARK MODE Fallback --- */
-        .dark .soft-bg { background: radial-gradient(circle, rgba(50,50,50,0.5) 0%, rgba(0,0,0,0.2) 100%) !important; }
-        
-        /* Language Switcher Styling */
-        .lang-switch span { cursor: pointer; transition: color 0.2s; }
-        .lang-switch span.active { font-weight: bold; border-bottom: 2px solid currentColor; }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Wilcuma — Michael K. Mueller</title>
+  <meta name="description" content="Stories, Activities and Portfolio" />
+  <style>
+    :root{
+      --accent: #2b9054;
+      --bg:#fff;--fg:#111;--muted:#555;--card:#f7f7f7;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#0b0b0d; --fg:#e6eef0; --muted:#9fb0b0; --card:#0f1415 }
+    }
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial; background:var(--bg); color:var(--fg); -webkit-font-smoothing:antialiased;}
+    header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid rgba(0,0,0,0.06)}
+    .brand{display:flex;gap:.75rem;align-items:center}
+    .logo{width:44px;height:44px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    .titles h1{margin:0;font-size:1.05rem}
+    .titles p{margin:0;font-size:.85rem;color:var(--muted)}
+    nav{display:flex;gap:.5rem;align-items:center}
+    .lang{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:.35rem .6rem;border-radius:6px;cursor:pointer}
+    main{padding:1.25rem;max-width:1100px;margin:0 auto}
+    .grid{display:grid;gap:1rem;grid-template-columns:repeat(2,1fr)}
+    @media (max-width:800px){.grid{grid-template-columns:1fr}}
+    .tile{display:flex;gap:1rem;align-items:center;padding:1rem;border-radius:12px;background:var(--card);overflow:hidden}
+    .media{flex:1;min-width:150px;max-width:50%;}
+    .media img, .media video{width:100%;height:auto;border-radius:8px;display:block}
+    .meta{flex:2}
+    .meta h3{margin:.2rem 0}
+    .meta p{margin:.35rem 0;color:var(--muted)}
+    .actions{display:flex;gap:.5rem;margin-top:.6rem}
+    .btn{padding:.45rem .7rem;border-radius:8px;border:0;cursor:pointer}
+    .btn.primary{background:var(--accent);color:#fff}
+    .btn.ghost{background:transparent;border:1px solid rgba(0,0,0,0.08)}
+    footer{margin-top:2rem;padding:1rem;display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-top:1px solid rgba(0,0,0,0.06)}
+    .footer-left{display:flex;gap:.6rem;align-items:center}
+    .small{font-size:.85rem;color:var(--muted)}
+    /* Story view */
+    .story{max-width:900px;margin:0 auto;padding:1rem}
+    .story h2{margin:0}
+    .story .navs{display:flex;justify-content:space-between;margin-top:.8rem}
+    .back{background:transparent;border:0;color:var(--accent);cursor:pointer}
+    pre.json{white-space:pre-wrap;background:rgba(0,0,0,0.03);padding:1rem;border-radius:8px;font-size:.9rem}
+    /* accessibility focus */
+    a:focus, button:focus{outline:3px solid rgba(43,144,84,0.2);outline-offset:2px}
+  </style>
 </head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">W</div>
+      <div class="titles"><h1 id="site-title">Wilcuma</h1><p id="site-sub">Stories, Activities and Portfolio</p></div>
+    </div>
+    <nav>
+      <button class="lang" id="lang-toggle" aria-label="Language switch">EN ▾</button>
+      <button class="btn ghost" id="theme-toggle" aria-label="Toggle theme">Theme</button>
+    </nav>
+  </header>
+  <main id="app">
+    <!-- content injected by JS -->
+  </main>
+  <footer>
+    <div class="footer-left"><img src="https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764520461/imprintic-emblem_olmzlh.png" alt="logo" style="height:36px"><div class="small" id="footer-text">© 2025/2026 — All rights reserved.</div></div>
+    <div class="small">Designed for responsive view • <span id="nuance" style="color:var(--accent)"></span></div>
+  </footer>
 
-<body class="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 flex flex-col">
-
-    <header class="w-full p-4 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            
-            <a href="index.html" class="flex items-center gap-2 text-xl font-bold transition">
-                <span id="nav-home-icon" class="h-6 w-6 flex items-center justify-center text-xl" style="color: var(--site-nuance-light);"><i data-lucide="" id="site-symbol-icon" class="w-6 h-6"></i></span> 
-                <div class="flex flex-col">
-                    <h1 id="site-name" class="text-xl md:text-2xl font-bold tracking-tight leading-none"></h1>
-                    <p id="site-subtitle" class="text-xs text-gray-500 dark:text-gray-400 font-medium"></p>
-                </div>
-            </a>
-            
-            <div class="flex items-center gap-6">
-                
-                <div class="flex items-center gap-4 text-lg" style="color: var(--site-nuance-light);">
-                    <a id="nav-prev" href="index.html" class="hover:opacity-80 transition"></a>
-                    <span id="nav-sep" class="text-gray-400"></span>
-                    <a id="nav-next" href="#" class="hover:opacity-80 opacity-50 pointer-events-none transition"></a>
-                </div>
-                
-                <div class="lang-switch text-sm font-medium text-gray-500 dark:text-gray-400 flex gap-2 border-l border-gray-300 dark:border-gray-700 pl-4">
-                    <span class="active text-gray-900 dark:text-gray-100">EN</span>
-                    <span class="hover:text-gray-900 dark:hover:text-gray-100">DE</span>
-                </div>
-            </div>
-
-        </div>
-    </header>
-
-    <main class="flex-grow px-6 py-10">
-        <div class="max-w-6xl mx-auto">
-            
-            <section class="mb-12 text-left">
-                <h2 id="page-title" class="text-4xl font-extrabold mb-4 bg-clip-text text-transparent" style="background-image: linear-gradient(to right, var(--site-nuance-light), #94a3b8);"></h2>
-                <p id="page-intro" class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl"></p>
-            </section>
-
-            <div id="tiles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                </div>
-        </div>
-    </main>
-
-    <footer id="main-footer" class="w-full py-6 text-center text-gray-900 text-sm border-t border-gray-200 dark:text-gray-100" style="background-color: var(--footer-bg-light);">
-        <div class="max-w-6xl mx-auto flex items-center justify-center gap-2">
-            <span id="footer-part1"></span>
-            <img id="footer-logo" src="" alt="Logo" class="object-contain opacity-70" style="width: 100%; height: auto;">
-            <span id="footer-part2"></span>
-        </div>
-    </footer>
-
-    <script>
-        // --- COLOR HELPER FUNCTIONS ---
-        function isValidHex(color) {
-            return /^#([0-9A-F]{3}){1,2}$/i.test(color);
+  <script>
+    // Embedded content derived from uploaded content.json (source: user's uploaded file). The site uses this as single-source content and rendering.
+    const content = {
+      "page_config": {
+        "preferences": {"site_title":"Wilcuma","site_subtitle":"Stories, Activities and Portfolio","site_symbol":"book-marked","site_nuance_color":"#2b9054"},
+        "language": {"language_default":"en","languages_supporte":["en","de"],"language_base_url":"/"},
+        "navigation": {"navigation_separator":"|","navigation_next":"▷","navigation_previous":"◁"},
+        "footer": {"footer_text1":"© 2025/2026","footer_logo_url":"https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764520461/imprintic-emblem_olmzlh.png","footer_logo_size":"10%","footer_text2":"All rights reserved.","display_foorter_bg":true,"footer_bg_color":"#702a17"}
+      },
+      "en": {
+        "index": {
+          "index_urls": {"page_url":"index.html","next_story_url":"story1.html"},
+          "index_content": {"index_title":"Michael K. Mueller","index_subtitle":"A showcase of my work.","intro_text":"A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work."},
+          "tiles": [
+            {"config":{"id":"story1","story_url":"story1.html","prev_story_url":"index.html","next_story_url":"story2.html","color":"#ab201c","symbol":"book-marked"},"media":{"media_url":"https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693659/00_index_blfowe.png","media_mobile-url":"","media_use_soft_bg":true,"media_size":"50%","media_caption":"The author Michael K. Mueller"},"content":{"tile_story_title":"Envy and Fairness","tile_story_description":"Envy is essentially the feeling you get when your expectations for fairness are let down. It can only really take root in societies where people have a baseline belief that things are supposed to be fair and that everyone has a shot.","story_subtitle1":"In Less Fortunate Places","story_text1":"In places where the less fortunate and those at the bottom of the ladder have zero chance of ever getting ahead or building a career—a situation often seen in the Global South—envy doesn't really flourish. That's because those who are struggling grew up without any expectation of fairness. It's a different story from Europe, for example, where equal opportunity has always been a stated goal of politicians. Ultimately, envy is the downside of being let down by a society you believed was fair. ","story_subtitle2":"Ahead or building a career—a situation often ","story_text2":"In places where the less fortunate and those at the bottom of the ladder have zero chance of ever getting ahead or building a career—a situation often seen in the Global South—envy doesn't really flourish. That's because those who are struggling grew up without any expectation of fairness. It's a different story from Europe, for example, where equal opportunity has always been a stated goal of politicians. Ultimately, envy is the downside of being let down by a society you believed was fair. "},"attachement":{"type":"paypal_button","hosted_id":"4TNEHSHJYT8YG","text":"Support a way forward","action":null}},
+            {"config":{"id":"story2","story_url":"story2.html","prev_story_url":"story1.html","next_story_url":"story3.html","color":"#43ab1c","symbol":"code-square"},"media":{"media_url":"https://res.cloudinary.com/dqwm4pdbz/video/upload/v1764369265/SoH-Intro_seglsu.webm","media_mobile_url":"https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764417329/SoH-Intro_nke18b.webp","media_use_soft_bg":false,"media_size":"50%","media_caption":"The author Michael K. Mueller"},"content":{"tile_story_title":"Envy and Fairness","tile_story_description":"Envy is essentially the feeling you get when your expectations for fairness are let down. It can only really take root in societies where people have a baseline belief that things are supposed to be fair and that everyone has a shot.","story_subtitle1":"In Less Fortunate Places","story_text1":"In places where the less fortunate and those at the bottom of the ladder have zero chance of ever getting ahead or building a career—a situation often seen in the Global South—envy doesn't really flourish. That's because those who are struggling grew up without any expectation of fairness. It's a different story from Europe, for example, where equal opportunity has always been a stated goal of politicians. Ultimately, envy is the downside of being let down by a society you believed was fair. ","story_subtitle2(optional)":"Ahead or building a career—a situation often ","story_text2)optional)":"In places where the less fortunate and those at the bottom of the ladder have zero chance of ever getting ahead or building a career—a situation often seen in the Global South—envy doesn't really flourish. That's because those who are struggling grew up without any expectation of fairness. It's a different story from Europe, for example, where equal opportunity has always been a stated goal of politicians. Ultimately, envy is the downside of being let down by a society you believed was fair. "},"attachement":{"type":"link","url":"#","text":"Download Full Report","action":"download"}}
+          ]
         }
-        
-        function getMidLightNuance(hex) {
-            // Mixes color with white (255) at ~85% white / 15% color
-            let r = parseInt(hex.substring(1, 3), 16), g = parseInt(hex.substring(3, 5), 16), b = parseInt(hex.substring(5, 7), 16);
-            r = Math.floor((r * 1.5 + 255 * 8.5) / 10); 
-            g = Math.floor((g * 1.5 + 255 * 8.5) / 10);
-            b = Math.floor((b * 1.5 + 255 * 8.5) / 10);
-            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-        }
-        function lightenColor(hex, percent) {
-            let r = parseInt(hex.substring(1, 3), 16), g = parseInt(hex.substring(3, 5), 16), b = parseInt(hex.substring(5, 7), 16);
-            const amount = Math.floor((255 * percent) / 100);
-            r = Math.min(255, r + amount);
-            g = Math.min(255, g + amount);
-            b = Math.min(255, b + amount);
-            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-        }
-        function darkenColor(hex, percent) {
-            let r = parseInt(hex.substring(1, 3), 16), g = parseInt(hex.substring(3, 5), 16), b = parseInt(hex.substring(5, 7), 16);
-            const amount = Math.floor((255 * percent) / 100);
-            r = Math.max(0, r - amount);
-            g = Math.max(0, g - amount);
-            b = Math.max(0, b - amount);
-            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-        }
+      }
+    };
 
-        async function loadContent() {
-            const response = await fetch('content.json'); 
-            const data = await response.json();
-            const config = data.page_config;
-            const indexData = data[config.language.language_default].index;
+    // Apply site preferences
+    document.getElementById('site-title').textContent = content.page_config.preferences.site_title;
+    document.getElementById('site-sub').textContent = content.page_config.preferences.site_subtitle;
+    document.getElementById('nuance').textContent = content.page_config.preferences.site_nuance_color;
+    document.getElementById('footer-text').textContent = content.page_config.footer.footer_text1 + ' — ' + content.page_config.footer.footer_text2;
 
-            // --- 1. SITE-WIDE CONFIGURATION (The "Frame") ---
-            const preferences = config.preferences;
-            const navigation = config.navigation;
-            const footer = config.footer;
+    // Simple router (hash-based)
+    function renderIndex(){
+      const idx = content.en.index;
+      const container = document.createElement('div');
+      const hero = document.createElement('section');
+      hero.innerHTML = `<h2>${escapeHtml(idx.index_content.index_title)}</h2><p class=small>${escapeHtml(idx.index_content.index_subtitle)}</p><p>${escapeHtml(idx.index_content.intro_text)}</p>`;
+      container.appendChild(hero);
 
-            // Apply Site Nuance Color
-            let siteColor = preferences.site_nuance_color || '#2563eb';
-            if (isValidHex(siteColor)) {
-                // Set CSS Variables for global use (Nav, Title Gradient, etc.)
-                document.documentElement.style.setProperty('--site-nuance-light', siteColor);
-                document.documentElement.style.setProperty('--site-nuance-dark', lightenColor(siteColor, 20));
-            }
-
-            // Apply Navigation Data
-            document.getElementById('site-name').innerText = preferences.site_title;
-            document.getElementById('site-subtitle').innerText = preferences.site_subtitle;
-            document.getElementById('site-symbol-icon').setAttribute('data-lucide', preferences.site_symbol);
-            
-            const navSep = document.getElementById('nav-sep');
-            const nextBtn = document.getElementById('nav-next');
-            const prevBtn = document.getElementById('nav-prev');
-            
-            navSep.innerText = navigation.navigation_separator;
-            nextBtn.innerText = navigation.navigation_next;
-            prevBtn.innerText = navigation.navigation_previous;
-
-            // Apply Index Page Navigation
-            // Prev always points to home on the index page
-            prevBtn.href = indexData.index_urls.page_url; 
-            // Next points to the first story
-            if (indexData.index_urls.next_story_url) {
-                nextBtn.href = indexData.index_urls.next_story_url;
-                nextBtn.classList.remove('opacity-50', 'pointer-events-none'); 
-            }
-
-            // Apply Page Content
-            document.getElementById('page-title').innerText = indexData.index_content.index_title;
-            document.getElementById('page-intro').innerText = indexData.index_content.intro_text;
-            
-            // Apply Footer Data
-            document.getElementById('footer-part1').innerText = footer.footer_text1;
-            document.getElementById('footer-logo').src = footer.footer_logo_url;
-            document.getElementById('footer-logo').style.maxWidth = footer.footer_logo_size;
-            document.getElementById('footer-part2').innerText = footer.footer_text2;
-            
-            // Footer Background Logic
-            const mainFooter = document.getElementById('main-footer');
-            if (footer.display_foorter_bg) {
-                let footerBgColor = footer.footer_bg_color;
-                if (isValidHex(footerBgColor)) {
-                    document.documentElement.style.setProperty('--footer-bg-light', footerBgColor);
-                    // Dark mode version of the footer background
-                    document.documentElement.style.setProperty('--footer-bg-dark', darkenColor(footerBgColor, 40)); 
-                    
-                    // Apply dark mode styling for the footer background
-                    const styleSheet = document.createElement("style");
-                    styleSheet.type = "text/css";
-                    styleSheet.innerText = `
-                        #main-footer { border-color: var(--footer-bg-dark) !important; }
-                        .dark #main-footer { 
-                            background-color: var(--footer-bg-dark) !important;
-                            color: white; 
-                        }
-                        .dark #main-footer img { opacity: 0.9 !important; }
-                    `;
-                    document.head.appendChild(styleSheet);
-                }
-            }
-
-
-            // --- 2. RENDER TILES (Specific Color Nuance) ---
-            const grid = document.getElementById('tiles-grid');
-            
-            indexData.tiles.forEach(tile => {
-                const tileConfig = tile.config;
-                const tileMedia = tile.media;
-                const tileContent = tile.content;
-
-                let tileColor = tileConfig.color || siteColor; // Fallback to site color
-
-                if (isValidHex(tileColor)) {
-                    // Calculate colors for light mode
-                    const accentColor = tileColor;
-                    const lightBgColor = getMidLightNuance(tileColor); 
-
-                    // Calculate colors for dark mode 
-                    const darkAccent = lightenColor(tileColor, 20); 
-                    const darkBg = darkenColor(tileColor, 50); 
-                    
-                    // Set light mode CSS variables for inline styles
-                    let nuanceStyle = `
-                        --tile-accent: ${accentColor}; 
-                        --tile-bg: ${lightBgColor};
-                        border-color: var(--tile-accent);
-                        background-color: var(--tile-bg); 
-                    `;
-
-                    const softBgClass = tileMedia.media_use_soft_bg ? 'soft-bg' : '';
-                    
-                    // Dynamically inject dark mode styles for this specific tile by ID
-                    const styleSheet = document.createElement("style");
-                    styleSheet.type = "text/css";
-                    styleSheet.innerText = `
-                        .dark #tile-${tileConfig.id} {
-                            --tile-accent: ${darkAccent} !important;
-                            --tile-bg: ${darkBg} !important;
-                            border-color: var(--tile-accent) !important;
-                            background-color: var(--tile-bg) !important; 
-                        }
-                    `;
-                    document.head.appendChild(styleSheet);
-
-                    // --- HTML GENERATION ---
-                    const cardHTML = `
-                    <a id="tile-${tileConfig.id}" href="${tileConfig.id}.html" class="tile-card p-6 rounded-xl border-2 flex flex-col h-full cursor-pointer text-left block group hover:border-[var(--tile-accent)]" style="${nuanceStyle}">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="tile-accent-text" data-lucide="${tileConfig.symbol}" style="color: var(--tile-accent);"></div>
-                            <span class="text-xs font-medium tile-accent-text px-3 py-1 rounded-full group-hover:scale-105 transition-transform" style="color: var(--tile-accent); background-color: var(--tile-bg);">View</span>
-                        </div>
-                        
-                        <div class="mb-4 overflow-hidden rounded-lg h-40 bg-gray-200 dark:bg-gray-800 relative flex items-center justify-center ${softBgClass}">
-                            <img src="${tileMedia.media_url}" alt="${tileContent.tile_story_title}" class="max-h-full max-w-full object-contain p-2">
-                        </div>
-
-                        <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">${tileContent.tile_story_title}</h3>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm flex-grow">
-                            ${tileContent.tile_story_description}
-                        </p>
-                    </a>
-                    `;
-                    grid.innerHTML += cardHTML;
-                }
-            });
-
-            lucide.createIcons();
-        }
-
-        // --- DARK MODE SYSTEM PREFERENCE CHECK ---
-        const htmlEl = document.documentElement;
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            htmlEl.classList.add('dark');
+      const grid = document.createElement('div'); grid.className='grid';
+      idx.tiles.forEach(tile=>{
+        const t = document.createElement('article'); t.className='tile';
+        const media = document.createElement('div'); media.className='media';
+        if(tile.media.media_url && /\.(mp4|webm|ogg)$/i.test(tile.media.media_url)){
+          const v = document.createElement('video'); v.src=tile.media.media_url; v.controls=true; v.setAttribute('aria-label', tile.content.tile_story_title);
+          media.appendChild(v);
         } else {
-            htmlEl.classList.remove('dark');
+          const img = document.createElement('img'); img.src=tile.media.media_url; img.alt=tile.media.media_caption||tile.content.tile_story_title;
+          media.appendChild(img);
+        }
+        const meta = document.createElement('div'); meta.className='meta';
+        meta.innerHTML = `<h3>${escapeHtml(tile.content.tile_story_title)}</h3><p class=small>${escapeHtml(tile.content.tile_story_description)}</p><div class="actions"></div>`;
+        const actions = meta.querySelector('.actions');
+        const open = document.createElement('button'); open.className='btn primary'; open.textContent='Open'; open.onclick = ()=>navigateTo(tile.config.story_url);
+        actions.appendChild(open);
+        // attachment handling
+        if(tile.attachement){
+          if(tile.attachement.type==='paypal_button'){
+            const pay = document.createElement('form'); pay.action = `https://www.paypal.com/cgi-bin/webscr`;
+            pay.method='post'; pay.target='_blank';
+            pay.innerHTML = `<input type="hidden" name="cmd" value="_s-xclick"><input type="hidden" name="hosted_button_id" value="${tile.attachement.hosted_id}"><button class='btn' type='submit'>${escapeHtml(tile.attachement.text||'Donate')}</button>`;
+            actions.appendChild(pay);
+          } else if(tile.attachement.type==='link'){
+            const a = document.createElement('a'); a.className='btn'; a.href=tile.attachement.url||'#'; a.textContent=tile.attachement.text||'Link';
+            if(tile.attachement.action==='download') a.setAttribute('download','');
+            actions.appendChild(a);
+          }
         }
 
-        loadContent();
-    </script>
+        t.appendChild(media); t.appendChild(meta);
+        grid.appendChild(t);
+      });
+      container.appendChild(grid);
+      const out = document.getElementById('app'); out.innerHTML=''; out.appendChild(container);
+    }
+
+    function renderStory(id){
+      const idx = content.en.index;
+      const tile = idx.tiles.find(t=>t.config.id===id || t.config.story_url.endsWith(id));
+      const out = document.getElementById('app'); out.innerHTML='';
+      if(!tile){ out.innerHTML='<p>Story not found</p>'; return }
+      const st = document.createElement('article'); st.className='story';
+      st.innerHTML = `<h2>${escapeHtml(tile.content.tile_story_title)}</h2><p class=small>${escapeHtml(tile.content.tile_story_description)}</p><div style='margin:1rem 0'>${mediaHtml(tile.media)}</div><h3>${escapeHtml(tile.content.story_subtitle1||'')}</h3><p>${escapeHtml(tile.content.story_text1||'')}</p><h3>${escapeHtml(tile.content.story_subtitle2||'')}</h3><p>${escapeHtml(tile.content.story_text2||'')}</p>`;
+      const navs = document.createElement('div'); navs.className='navs';
+      const prev = document.createElement('button'); prev.className='back'; prev.textContent=content.page_config.navigation.navigation_previous + ' Back'; prev.onclick = ()=>navigateTo('index.html');
+      const next = document.createElement('button'); next.className='back'; next.textContent='Next ' + content.page_config.navigation.navigation_next; next.onclick = ()=>{
+        if(tile.config.next_story_url) navigateTo(tile.config.next_story_url); else navigateTo('index.html');
+      };
+      navs.appendChild(prev); navs.appendChild(next);
+      st.prepend(navs);
+      out.appendChild(st);
+    }
+
+    function mediaHtml(media){
+      if(!media) return '';
+      if(media.media_url && /\.(mp4|webm|ogg)$/i.test(media.media_url)){
+        return `<video controls src="${media.media_url}" style="max-width:100%;border-radius:8px"></video>`;
+      }
+      return `<img src="${media.media_url}" alt="${(media.media_caption||'media')}" style="max-width:100%;border-radius:8px">`;
+    }
+
+    function navigateTo(path){
+      // use simple hash routing
+      const page = path.split('/').pop();
+      if(page==='index.html' || page===''){
+        location.hash = '';
+        renderIndex();
+      } else {
+        const id = page.replace('.html','');
+        location.hash = '#'+id;
+        renderStory(id);
+      }
+    }
+
+    // utilities
+    function escapeHtml(s){ if(!s) return ''; return String(s).replace(/[&<>"']/g, function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c];}); }
+
+    // initial render based on hash
+    window.addEventListener('hashchange', ()=>{
+      const id = location.hash.replace('#',''); if(!id) renderIndex(); else renderStory(id);
+    });
+    // initial
+    if(location.hash) renderStory(location.hash.replace('#','')); else renderIndex();
+
+    // language toggle placeholder (prepares for DE)
+    document.getElementById('lang-toggle').addEventListener('click', ()=>{
+      alert('Language support is present in the data. German (de) can be enabled in a future export. For now the site serves English.');
+    });
+
+    // theme toggle (honors system by default)
+    document.getElementById('theme-toggle').addEventListener('click', ()=>{
+      // allow user to toggle explicit mode
+      const has = document.documentElement.hasAttribute('data-theme');
+      if(has){document.documentElement.removeAttribute('data-theme'); alert('Back to system theme');}
+      else {document.documentElement.setAttribute('data-theme','light'); alert('Explicit light theme set (toggle will revert to system)');}
+    });
+
+    // small helper: show nuance color
+    document.documentElement.style.setProperty('--accent', content.page_config.preferences.site_nuance_color||'#2b9054');
+  </script>
+
 </body>
 </html>
