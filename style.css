@@ -1,134 +1,163 @@
-/* --- Color Variables: Light Mode (Default) --- */
+/* Define Variables for Dark/Light Mode */
 :root {
+    /* Light Mode Defaults */
     --bg-color: #ffffff;
     --text-color: #333333;
-    --header-bg: #f4f4f4;
+    --accent-color: #007bff; /* Primary action color (blue) */
     --border-color: #dddddd;
-    --link-color: #007bff;
-    --accent-color: #007bff;
-    --table-header-bg: #e0e0e0;
+    --table-header-bg: #f5f5f5;
 }
 
-/* --- Color Variables: Dark Mode --- */
+/* Dark Mode Overrides (Applies when OS is in Dark Mode) */
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg-color: #1a1a1a;
-        --text-color: #f0f0f0;
-        --header-bg: #2d2d2d;
-        --border-color: #555555;
-        --link-color: #4da6ff;
-        --accent-color: #4da6ff;
-        --table-header-bg: #333333;
+        --bg-color: #1e1e1e;
+        --text-color: #cccccc;
+        --accent-color: #4da6ff; /* A lighter blue for contrast in dark mode */
+        --border-color: #383838;
+        --table-header-bg: #2d2d30;
     }
 }
 
-/* --- Base Styles and Responsiveness --- */
+/* Base Styles */
 body {
     font-family: Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme change */
 }
 
 .container {
-    max-width: 1000px;
-    margin: 30px auto;
+    max-width: 900px;
+    margin: 0 auto;
     padding: 20px;
-    box-sizing: border-box;
 }
 
-/* Responsive adjustments for smaller screens */
-@media (max-width: 600px) {
-    .container {
-        margin: 10px;
-        padding: 10px;
-    }
-
-    h1 {
-        font-size: 1.5em;
-    }
-
-    h2 {
-        font-size: 1.2em;
-    }
-}
-
-/* --- Typography and Structure --- */
-h1, h2, h3 {
-    margin-top: 1.5em;
-    color: var(--accent-color);
-}
-
-header {
-    padding: 20px;
-    background-color: var(--header-bg);
-    border-bottom: 2px solid var(--border-color);
-    margin-bottom: 20px;
-}
-
-/* --- Table Styling (Contact and Competence) --- */
-.table-scroll {
-    overflow-x: auto; /* Makes large tables scrollable on small screens */
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid var(--border-color);
-}
-
-th {
-    background-color: var(--table-header-bg);
-    font-weight: bold;
-    color: var(--text-color); /* Ensure text is readable against the background */
-}
-
-tr:nth-child(even) {
-    background-color: var(--header-bg); /* Zebra striping for readability */
-}
-
-/* Specific contact table adjustments */
-.profile-photo {
-    max-width: 100px;
-    height: auto;
-    border-radius: 50%;
-    border: 3px solid var(--accent-color);
-}
-
-/* --- CV Section Styling --- */
-.job-entry, .education-entry {
-    margin-bottom: 20px;
-    padding-left: 15px;
-    border-left: 4px solid var(--accent-color);
-}
-
-ul {
-    padding-left: 20px;
-}
-
-li {
-    margin-bottom: 5px;
-}
-
-hr {
-    border: 0;
-    height: 1px;
-    background: var(--border-color);
-    margin: 20px 0;
-}
-/* Add to style.css */
+/* Section Separator */
 .section-divider {
     border: 0;
     height: 3px;
     background: var(--border-color);
-    margin: 40px 0; /* Extra spacing to separate the main blocks */
+    margin: 40px 0;
+}
+
+/* --- Block Section Styles --- */
+.block-section {
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 30px;
+    background-color: var(--bg-color); /* Ensures the block stands out slightly */
+}
+
+h1 {
+    font-size: 1.8em;
+    color: var(--accent-color);
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 1.5em;
+    color: var(--text-color);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 5px;
+    margin-top: 25px;
+}
+
+h3 {
+    font-size: 1.2em;
+    color: var(--accent-color);
+    margin-bottom: 5px;
+}
+
+/* --- Contact Table (Header) Styles --- */
+.contact-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: fixed;
+}
+
+.contact-table th, .contact-table td {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.contact-table thead th {
+    background-color: var(--table-header-bg);
+    font-weight: bold;
+}
+
+/* --- Profile Photo Styling --- */
+.profile-photo {
+    /* Use 'width: 40' from the mkm-header.html provided, but apply styling for a clean look */
+    max-width: 100px; 
+    height: 100px; 
+    object-fit: cover; 
+    border-radius: 50%; 
+    border: 3px solid var(--accent-color);
+    display: block;
+    margin: 0 auto;
+}
+
+/* --- Job/Education Entry Styles (CV Section) --- */
+.job-entry, .education-entry {
+    margin-bottom: 15px;
+    padding-top: 5px;
+}
+
+.cv-section hr {
+    border: none;
+    border-top: 1px dotted var(--border-color);
+    margin: 15px 0;
+}
+
+/* --- Competence Profile Table Styles --- */
+.competence-profile table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 0.9em;
+}
+
+.competence-profile th, .competence-profile td {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    vertical-align: top;
+}
+
+.competence-profile thead th {
+    background-color: var(--table-header-bg);
+    font-weight: bold;
+}
+
+/* Makes the table horizontally scrollable on small screens */
+.table-scroll {
+    overflow-x: auto;
+}
+
+/* --- Download Button Style --- */
+.download-link {
+    text-align: right;
+    margin: 20px 0 10px;
+}
+
+.btn-download {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--accent-color);
+    color: var(--bg-color); /* Text color in contrast to accent color */
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-download:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
 }
