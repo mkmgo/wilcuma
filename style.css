@@ -1,0 +1,134 @@
+/* --- Color Variables: Light Mode (Default) --- */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --header-bg: #f4f4f4;
+    --border-color: #dddddd;
+    --link-color: #007bff;
+    --accent-color: #007bff;
+    --table-header-bg: #e0e0e0;
+}
+
+/* --- Color Variables: Dark Mode --- */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1a1a1a;
+        --text-color: #f0f0f0;
+        --header-bg: #2d2d2d;
+        --border-color: #555555;
+        --link-color: #4da6ff;
+        --accent-color: #4da6ff;
+        --table-header-bg: #333333;
+    }
+}
+
+/* --- Base Styles and Responsiveness --- */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme change */
+}
+
+.container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+    .container {
+        margin: 10px;
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+}
+
+/* --- Typography and Structure --- */
+h1, h2, h3 {
+    margin-top: 1.5em;
+    color: var(--accent-color);
+}
+
+header {
+    padding: 20px;
+    background-color: var(--header-bg);
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+/* --- Table Styling (Contact and Competence) --- */
+.table-scroll {
+    overflow-x: auto; /* Makes large tables scrollable on small screens */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid var(--border-color);
+}
+
+th {
+    background-color: var(--table-header-bg);
+    font-weight: bold;
+    color: var(--text-color); /* Ensure text is readable against the background */
+}
+
+tr:nth-child(even) {
+    background-color: var(--header-bg); /* Zebra striping for readability */
+}
+
+/* Specific contact table adjustments */
+.profile-photo {
+    max-width: 100px;
+    height: auto;
+    border-radius: 50%;
+    border: 3px solid var(--accent-color);
+}
+
+/* --- CV Section Styling --- */
+.job-entry, .education-entry {
+    margin-bottom: 20px;
+    padding-left: 15px;
+    border-left: 4px solid var(--accent-color);
+}
+
+ul {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: var(--border-color);
+    margin: 20px 0;
+}
+/* Add to style.css */
+.section-divider {
+    border: 0;
+    height: 3px;
+    background: var(--border-color);
+    margin: 40px 0; /* Extra spacing to separate the main blocks */
+}

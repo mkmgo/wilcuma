@@ -1,207 +1,149 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Wilcuma — Michael K. Mueller</title>
-  <meta name="description" content="Stories, Activities and Portfolio" />
-  <style>
-    :root{
-      --accent: #2b9054;
-      --bg:#fff;--fg:#111;--muted:#555;--card:#f7f7f7;
-    }
-    @media (prefers-color-scheme: dark){
-      :root{ --bg:#0b0b0d; --fg:#e6eef0; --muted:#9fb0b0; --card:#0f1415 }
-    }
-    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial; background:var(--bg); color:var(--fg); -webkit-font-smoothing:antialiased;}
-    header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid rgba(0,0,0,0.06)}
-    .brand{display:flex;gap:.75rem;align-items:center}
-    .logo{width:44px;height:44px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
-    .titles h1{margin:0;font-size:1.05rem}
-    .titles p{margin:0;font-size:.85rem;color:var(--muted)}
-    nav{display:flex;gap:.5rem;align-items:center}
-    .lang{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:.35rem .6rem;border-radius:6px;cursor:pointer}
-    main{padding:1.25rem;max-width:1100px;margin:0 auto}
-    .grid{display:grid;gap:1rem;grid-template-columns:repeat(2,1fr)}
-    @media (max-width:800px){.grid{grid-template-columns:1fr}}
-    .tile{display:flex;gap:1rem;align-items:center;padding:1rem;border-radius:12px;background:var(--card);overflow:hidden}
-    .media{flex:1;min-width:150px;max-width:50%;}
-    .media img, .media video{width:100%;height:auto;border-radius:8px;display:block}
-    .meta{flex:2}
-    .meta h3{margin:.2rem 0}
-    .meta p{margin:.35rem 0;color:var(--muted)}
-    .actions{display:flex;gap:.5rem;margin-top:.6rem}
-    .btn{padding:.45rem .7rem;border-radius:8px;border:0;cursor:pointer}
-    .btn.primary{background:var(--accent);color:#fff}
-    .btn.ghost{background:transparent;border:1px solid rgba(0,0,0,0.08)}
-    footer{margin-top:2rem;padding:1rem;display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-top:1px solid rgba(0,0,0,0.06)}
-    .footer-left{display:flex;gap:.6rem;align-items:center}
-    .small{font-size:.85rem;color:var(--muted)}
-    /* Story view */
-    .story{max-width:900px;margin:0 auto;padding:1rem}
-    .story h2{margin:0}
-    .story .navs{display:flex;justify-content:space-between;margin-top:.8rem}
-    .back{background:transparent;border:0;color:var(--accent);cursor:pointer}
-    pre.json{white-space:pre-wrap;background:rgba(0,0,0,0.03);padding:1rem;border-radius:8px;font-size:.9rem}
-    /* accessibility focus */
-    a:focus, button:focus{outline:3px solid rgba(43,144,84,0.2);outline-offset:2px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michael Karl Mueller - Profile</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="color-scheme" content="light dark">
 </head>
 <body>
-  <header>
-    <div class="brand">
-      <div class="logo">W</div>
-      <div class="titles"><h1 id="site-title">Wilcuma</h1><p id="site-sub">Stories, Activities and Portfolio</p></div>
+    <div class="container">
+        
+        <header class="block-section">
+            <hgroup>
+                <h2>Michael Karl Mueller</h2>
+                <h1>Investment Advisor / Project Consultant</h1>
+            </hgroup>
+            
+            <div class="download-link">
+                <a href="https://res.cloudinary.com/[YOUR_CLOUD_NAME]/image/upload/fl_attachment/[YOUR_PUBLIC_ID].pdf" class="btn-download">
+                    Download CV (PDF)
+                </a>
+            </div>
+
+            <table class="contact-table">
+                <thead>
+                    <tr>
+                        <th style="text-align:center">Photo</th>
+                        <th>Location</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align:center">
+                            <img src="https://res.cloudinary.com/dqwm4pdbz/image/upload/v1763401663/Business_1_Ink_gp8daq...." alt="Profile Photo" class="profile-photo">
+                        </td>
+                        <td>Zurich area (Switzerland)</td>
+                        <td>+41 79...</td>
+                        <td>michael.mueller...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </header>
+        
+        <hr class="section-divider">
+
+        <section class="cv-section block-section">
+            <h2>Professional Experience</h2>
+            
+            <div class="job-entry">
+                <h3>01.2009 - Today<br>Investment Advisor / Project Consultant</h3>
+                <p>Independent Investment Advisor and Project Consultant for Financial Institutions &amp; Family Offices in Zurich area, Switzerland</p>
+                <ul>
+                    <li><p>Investment Advisory &amp; Consulting: Fund manager selection, operations, fund monitoring, portfolio management of fund-based mandates</p></li>
+                    <li><p>Clients: Swiss family offices, Swiss cantonal banks, private banks, pension funds</p></li>
+                </ul>
+            </div>
+            
+            <hr>
+
+            <div class="job-entry">
+                <h3>04.2006 - 12.2008<br>Head Document Management</h3>
+                <p>Responsible for process optimization and eDocument management projects.</p>
+            </div>
+            
+            <hr>
+            
+            <h2>Education</h2>
+            
+            <div class="education-entry">
+                <h3>10.2003 – 09.2004<br>European Management MBA (Full Time)</h3>
+                <p>European Institute for Advanced Behavioural Management, Saarbrucken, Germany</p>
+            </div>
+            
+            <hr>
+            
+            <div class="education-entry">
+                <h3>10.1991 – 08.2000<br>Diploma/Master in Economics</h3>
+                <p>Johannes Gutenberg-University, Mainz, Germany</p>
+            </div>
+            
+            <hr>
+
+            <h2>Languages</h2>
+            <p>German (native), English (fluent), French (basic)</p>
+            
+            <hr>
+
+            <h2>Computer literacy and tools</h2>
+            <p>MS Excel, Word, PowerPoint, Access, Airtable, Notion, Setup interfaces with Data Providers, LLMs, Prompt Engineering, Workflow Automation</p>
+
+            <hr>
+
+            <h2>Activities</h2>
+            <p>Travelling, reading, cooking, running (half-marathon level), horse riding</p>
+        </section>
+        
+        <hr class="section-divider">
+
+        <section class="competence-profile block-section">
+            <h2>Complete Five-Layer Character and Competence Profile</h2>
+            
+            <h3>1. My Core Expertises: Knowledge Proof</h3>
+            <p>This section validates your knowledge domains with specific evidence from your education and roles.</p>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="text-align:left">Core Expertise</th>
+                            <th style="text-align:left">Broad-Eyes Analysis (The Principle)</th>
+                            <th style="text-align:left">Detailed Substantiation (Your Proof/Result)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align:left"><strong>Finance &amp; Banking</strong></td>
+                            <td style="text-align:left"><em>Understanding of financial instruments, markets, and banking operations.</em></td>
+                            <td style="text-align:left">Worked as a <strong>Senior Relationship Manager</strong> in the area of Private Wealth Management for seven years. Served as an <strong>Investment Advisor</strong> in Fund Selection and Monitoring for institutional clients. Achieved a Diploma/Master in <strong>Economics</strong>.</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left"><strong>Law &amp; Taxation</strong></td>
+                            <td style="text-align:left"><em>Knowledge of legal frameworks and tax principles.</em></td>
+                            <td style="text-align:left">Diploma/Master in Economics with a focus on taxation in Germany. Delivered preparatory courses in <strong>taxation</strong>. European Management MBA with modules in law.</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left"><strong>Process Management</strong></td>
+                            <td style="text-align:left"><em>Identifying bottlenecks, designing streamlined procedures, in digital production.</em></td>
+                            <td style="text-align:left">Direct responsibility for <strong>process optimization</strong> as Head Document Management. Managed projects focused on <strong>eDocument Management</strong>. Possesses <strong>Workflow Automation</strong> skills.</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left"><strong>Educational Transformation</strong></td>
+                            <td style="text-align:left"><em>Modernizing methods, integrating tech, shifting mindsets.</em></td>
+                            <td style="text-align:left">Worked as a developer and facilitator for <strong>executive business trainings utilizing financial business simulations</strong>, a modern, high-impact teaching method.</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left"><strong>Sparking Inherent Interest...</strong></td>
+                            <td style="text-align:left"><em>Fostering genuine curiosity and creating inspirational environments.</em></td>
+                            <td style="text-align:left">Demonstrated commitment to the goal of <strong>successful test and assessment results</strong> for students through preparatory courses. Achieved by combining deep <strong>Expertise</strong> (Economics) with the <strong>Competence</strong> of <strong>Tutoring</strong> and <strong>Visualisation</strong>.</td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
+        </section>
+
     </div>
-    <nav>
-      <button class="lang" id="lang-toggle" aria-label="Language switch">EN ▾</button>
-      <button class="btn ghost" id="theme-toggle" aria-label="Toggle theme">Theme</button>
-    </nav>
-  </header>
-  <main id="app">
-    <!-- content injected by JS -->
-  </main>
-  <footer>
-    <div class="footer-left"><img src="https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764520461/imprintic-emblem_olmzlh.png" alt="logo" style="height:36px"><div class="small" id="footer-text">© 2025/2026 — All rights reserved.</div></div>
-    <div class="small">Designed for responsive view • <span id="nuance" style="color:var(--accent)"></span></div>
-  </footer>
-
-  <script>
-    // Embedded content derived from uploaded content.json (source: user's uploaded file). The site uses this as single-source content and rendering.
-    const content = {
-      "page_config": {
-        "preferences": {"site_title":"Wilcuma","site_subtitle":"Stories, Activities and Portfolio","site_symbol":"book-marked","site_nuance_color":"#2b9054"},
-        "language": {"language_default":"en","languages_supporte":["en","de"],"language_base_url":"/"},
-        "navigation": {"navigation_separator":"|","navigation_next":"▷","navigation_previous":"◁"},
-        "footer": {"footer_text1":"© 2025/2026","footer_logo_url":"https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764520461/imprintic-emblem_olmzlh.png","footer_logo_size":"10%","footer_text2":"All rights reserved.","display_foorter_bg":true,"footer_bg_color":"#702a17"}
-      },
-      "en": {
-        "index": {
-          "index_urls": {"page_url":"index.html","next_story_url":"story1.html"},
-          "index_content": {"index_title":"Michael K. Mueller","index_subtitle":"A showcase of my work.","intro_text":"A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work.A showcase of my work."},
-          "tiles": [
-            {"config":{"id":"story1","story_url":"story1.html","prev_story_url":"index.html","next_story_url":"story2.html","color":"#ab201c","symbol":"book-marked"},"media":{"media_url":"https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764693659/00_index_blfowe.png","media_mobile-url":"","media_use_soft_bg":true,"media_size":"50%","media_caption":"The author Michael K. Mueller"},"content":{"tile_story_title":"Envy and Fairness","tile_story_description":"Envy is essentially the feeling you get when your expectations for fairness are let down. It can only really take root in societies where people have a baseline belief that things are supposed to be fair and that everyone has a shot.","story_subtitle1":"In Less Fortunate Places","story_text1":"In places where the less fortunate and those at the bottom of the ladder have zero chance of ever getting ahead or building a career—a situation often seen in the Global South—envy doesn't really flourish. That's because those who are struggling grew up without any expectation of fairness. It's a different story from Europe, for example, where equal opportunity has always been a stated goal of politicians. Ultimately, envy is the downside of being let down by a society you believed was fair. ","story_subtitle2":"Ahead or building a career—a situation often ","story_text2":"In places where the less fortunate and those at the bottom of the ladder have zero chance of ever getting ahead or building a career—a situation often seen in the Global South—envy doesn't really flourish. That's because those who are struggling grew up without any expectation of fairness. It's a different story from Europe, for example, where equal opportunity has always been a stated goal of politicians. Ultimately, envy is the downside of being let down by a society you believed was fair. "},"attachement":{"type":"paypal_button","hosted_id":"4TNEHSHJYT8YG","text":"Support a way forward","action":null}},
-            {"config":{"id":"story2","story_url":"story2.html","prev_story_url":"story1.html","next_story_url":"story3.html","color":"#43ab1c","symbol":"code-square"},"media":{"media_url":"https://res.cloudinary.com/dqwm4pdbz/video/upload/v1764369265/SoH-Intro_seglsu.webm","media_mobile_url":"https://res.cloudinary.com/dqwm4pdbz/image/upload/v1764417329/SoH-Intro_nke18b.webp","media_use_soft_bg":false,"media_size":"50%","media_caption":"The author Michael K. Mueller"},"content":{"tile_story_title":"Envy and Fairness","tile_story_description":"Envy is essentially the feeling you get when your expectations for fairness are let down. It can only really take root in societies where people have a baseline belief that things are supposed to be fair and that everyone has a shot.","story_subtitle1":"In Less Fortunate Places","story_text1":"In places where the less fortunate and those at the bottom of the ladder have zero chance of ever getting ahead or building a career—a situation often seen in the Global South—envy doesn't really flourish. That's because those who are struggling grew up without any expectation of fairness. It's a different story from Europe, for example, where equal opportunity has always been a stated goal of politicians. Ultimately, envy is the downside of being let down by a society you believed was fair. ","story_subtitle2(optional)":"Ahead or building a career—a situation often ","story_text2)optional)":"In places where the less fortunate and those at the bottom of the ladder have zero chance of ever getting ahead or building a career—a situation often seen in the Global South—envy doesn't really flourish. That's because those who are struggling grew up without any expectation of fairness. It's a different story from Europe, for example, where equal opportunity has always been a stated goal of politicians. Ultimately, envy is the downside of being let down by a society you believed was fair. "},"attachement":{"type":"link","url":"#","text":"Download Full Report","action":"download"}}
-          ]
-        }
-      }
-    };
-
-    // Apply site preferences
-    document.getElementById('site-title').textContent = content.page_config.preferences.site_title;
-    document.getElementById('site-sub').textContent = content.page_config.preferences.site_subtitle;
-    document.getElementById('nuance').textContent = content.page_config.preferences.site_nuance_color;
-    document.getElementById('footer-text').textContent = content.page_config.footer.footer_text1 + ' — ' + content.page_config.footer.footer_text2;
-
-    // Simple router (hash-based)
-    function renderIndex(){
-      const idx = content.en.index;
-      const container = document.createElement('div');
-      const hero = document.createElement('section');
-      hero.innerHTML = `<h2>${escapeHtml(idx.index_content.index_title)}</h2><p class=small>${escapeHtml(idx.index_content.index_subtitle)}</p><p>${escapeHtml(idx.index_content.intro_text)}</p>`;
-      container.appendChild(hero);
-
-      const grid = document.createElement('div'); grid.className='grid';
-      idx.tiles.forEach(tile=>{
-        const t = document.createElement('article'); t.className='tile';
-        const media = document.createElement('div'); media.className='media';
-        if(tile.media.media_url && /\.(mp4|webm|ogg)$/i.test(tile.media.media_url)){
-          const v = document.createElement('video'); v.src=tile.media.media_url; v.controls=true; v.setAttribute('aria-label', tile.content.tile_story_title);
-          media.appendChild(v);
-        } else {
-          const img = document.createElement('img'); img.src=tile.media.media_url; img.alt=tile.media.media_caption||tile.content.tile_story_title;
-          media.appendChild(img);
-        }
-        const meta = document.createElement('div'); meta.className='meta';
-        meta.innerHTML = `<h3>${escapeHtml(tile.content.tile_story_title)}</h3><p class=small>${escapeHtml(tile.content.tile_story_description)}</p><div class="actions"></div>`;
-        const actions = meta.querySelector('.actions');
-        const open = document.createElement('button'); open.className='btn primary'; open.textContent='Open'; open.onclick = ()=>navigateTo(tile.config.story_url);
-        actions.appendChild(open);
-        // attachment handling
-        if(tile.attachement){
-          if(tile.attachement.type==='paypal_button'){
-            const pay = document.createElement('form'); pay.action = `https://www.paypal.com/cgi-bin/webscr`;
-            pay.method='post'; pay.target='_blank';
-            pay.innerHTML = `<input type="hidden" name="cmd" value="_s-xclick"><input type="hidden" name="hosted_button_id" value="${tile.attachement.hosted_id}"><button class='btn' type='submit'>${escapeHtml(tile.attachement.text||'Donate')}</button>`;
-            actions.appendChild(pay);
-          } else if(tile.attachement.type==='link'){
-            const a = document.createElement('a'); a.className='btn'; a.href=tile.attachement.url||'#'; a.textContent=tile.attachement.text||'Link';
-            if(tile.attachement.action==='download') a.setAttribute('download','');
-            actions.appendChild(a);
-          }
-        }
-
-        t.appendChild(media); t.appendChild(meta);
-        grid.appendChild(t);
-      });
-      container.appendChild(grid);
-      const out = document.getElementById('app'); out.innerHTML=''; out.appendChild(container);
-    }
-
-    function renderStory(id){
-      const idx = content.en.index;
-      const tile = idx.tiles.find(t=>t.config.id===id || t.config.story_url.endsWith(id));
-      const out = document.getElementById('app'); out.innerHTML='';
-      if(!tile){ out.innerHTML='<p>Story not found</p>'; return }
-      const st = document.createElement('article'); st.className='story';
-      st.innerHTML = `<h2>${escapeHtml(tile.content.tile_story_title)}</h2><p class=small>${escapeHtml(tile.content.tile_story_description)}</p><div style='margin:1rem 0'>${mediaHtml(tile.media)}</div><h3>${escapeHtml(tile.content.story_subtitle1||'')}</h3><p>${escapeHtml(tile.content.story_text1||'')}</p><h3>${escapeHtml(tile.content.story_subtitle2||'')}</h3><p>${escapeHtml(tile.content.story_text2||'')}</p>`;
-      const navs = document.createElement('div'); navs.className='navs';
-      const prev = document.createElement('button'); prev.className='back'; prev.textContent=content.page_config.navigation.navigation_previous + ' Back'; prev.onclick = ()=>navigateTo('index.html');
-      const next = document.createElement('button'); next.className='back'; next.textContent='Next ' + content.page_config.navigation.navigation_next; next.onclick = ()=>{
-        if(tile.config.next_story_url) navigateTo(tile.config.next_story_url); else navigateTo('index.html');
-      };
-      navs.appendChild(prev); navs.appendChild(next);
-      st.prepend(navs);
-      out.appendChild(st);
-    }
-
-    function mediaHtml(media){
-      if(!media) return '';
-      if(media.media_url && /\.(mp4|webm|ogg)$/i.test(media.media_url)){
-        return `<video controls src="${media.media_url}" style="max-width:100%;border-radius:8px"></video>`;
-      }
-      return `<img src="${media.media_url}" alt="${(media.media_caption||'media')}" style="max-width:100%;border-radius:8px">`;
-    }
-
-    function navigateTo(path){
-      // use simple hash routing
-      const page = path.split('/').pop();
-      if(page==='index.html' || page===''){
-        location.hash = '';
-        renderIndex();
-      } else {
-        const id = page.replace('.html','');
-        location.hash = '#'+id;
-        renderStory(id);
-      }
-    }
-
-    // utilities
-    function escapeHtml(s){ if(!s) return ''; return String(s).replace(/[&<>"']/g, function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c];}); }
-
-    // initial render based on hash
-    window.addEventListener('hashchange', ()=>{
-      const id = location.hash.replace('#',''); if(!id) renderIndex(); else renderStory(id);
-    });
-    // initial
-    if(location.hash) renderStory(location.hash.replace('#','')); else renderIndex();
-
-    // language toggle placeholder (prepares for DE)
-    document.getElementById('lang-toggle').addEventListener('click', ()=>{
-      alert('Language support is present in the data. German (de) can be enabled in a future export. For now the site serves English.');
-    });
-
-    // theme toggle (honors system by default)
-    document.getElementById('theme-toggle').addEventListener('click', ()=>{
-      // allow user to toggle explicit mode
-      const has = document.documentElement.hasAttribute('data-theme');
-      if(has){document.documentElement.removeAttribute('data-theme'); alert('Back to system theme');}
-      else {document.documentElement.setAttribute('data-theme','light'); alert('Explicit light theme set (toggle will revert to system)');}
-    });
-
-    // small helper: show nuance color
-    document.documentElement.style.setProperty('--accent', content.page_config.preferences.site_nuance_color||'#2b9054');
-  </script>
-
 </body>
 </html>
